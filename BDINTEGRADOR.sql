@@ -1,0 +1,39 @@
+USE MASTER
+GO
+
+IF DB_ID('BDINTEGRADOR') IS NOT NULL
+	DROP DATABASE BDINTEGRADOR
+GO
+
+CREATE DATABASE BDINTEGRADOR
+GO
+
+USE BDINTEGRADOR
+GO
+
+CREATE TABLE EMPLEADO (
+	Id			INT			 NOT NULL	IDENTITY(1,1)  PRIMARY KEY,
+	Nombre		VARCHAR(50)  NOT NULL,
+	Apellido	VARCHAR(50)  NOT NULL,
+	Direccion	VARCHAR(50)  NOT NULL,
+	Email		VARCHAR(100) NOT NULL,
+	Clave		VARCHAR(50)  NOT NULL,
+)
+GO
+
+CREATE PROCEDURE SP_EMPLEADO_INSERT
+	@nombre		VARCHAR(50),
+	@apellido	VARCHAR(50),
+	@direccion	VARCHAR(50),
+	@email		VARCHAR(50),
+	@clave		VARCHAR(50)
+AS
+BEGIN
+	INSERT EMPLEADO (Nombre, Apellido, Direccion, Email, Clave) 
+	VALUES (@nombre, @apellido, @direccion, @email, @clave)
+END
+GO
+
+/* INSERTS */
+
+EXEC SP_EMPLEADO_INSERT 'nombre1','apellido1','direccion1','email1','clave1'
