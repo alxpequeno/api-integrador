@@ -43,7 +43,7 @@ namespace api_integrador.datos
         }
 
 
-        public void ActualizarTrabajador(Tutor tutor)
+        public void ActualizarTutor(Tutor tutor)
         {
             SqlConnection cnx = cn.conecta();
             cnx.Open();
