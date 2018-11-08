@@ -37,53 +37,64 @@ GO
 
 
 CREATE TABLE TUTOR (
-	Id			INT			 NOT NULL	IDENTITY(1,1)  PRIMARY KEY,
-	Nombre		VARCHAR(50)  NOT NULL,
-	Apellido	VARCHAR(50)  NOT NULL,
-	Direccion	VARCHAR(50)  NOT NULL,
-	Email		VARCHAR(100) NOT NULL,
-	Contraseña	VARCHAR(50)  NOT NULL
+	id_tutor			INT			 NOT NULL	IDENTITY(1,1)  PRIMARY KEY,
+	nombre_tutor		VARCHAR(50)  NOT NULL,
+	apellido_tutor	VARCHAR(50)  NOT NULL,
+	direccion_tutor	VARCHAR(50)  NOT NULL,
+	email_tutor		VARCHAR(100) NOT NULL,
+	contraseña_tutor	VARCHAR(50)  NOT NULL
 )
 GO
 
 
 create proc sp_registroTutor
-    @nombre		VARCHAR(50),
-	@apellido	VARCHAR(50),
-	@direccion	VARCHAR(50),
-	@email		VARCHAR(50),
-	@contraseña		VARCHAR(50)
+    @nombreT		VARCHAR(50),
+	@apellidoT	VARCHAR(50),
+	@direccionT	VARCHAR(50),
+	@emailT		VARCHAR(50),
+	@contraseñaT		VARCHAR(50)
 AS
 BEGIN
-	INSERT TUTOR (Nombre, Apellido, Direccion, Email, Contraseña) 
-	VALUES (@nombre, @apellido, @direccion, @email, @contraseña)
+	INSERT TUTOR (nombre_tutor, apellido_tutor, direccion_tutor, email_tutor, contraseña_tutor) 
+	VALUES (@nombreT, @apellidoT, @direccionT, @emailT, @contraseñaT)
 END
 GO
 
 
 create proc sp_modificarTutor
-    @id int,
-    @nombre		VARCHAR(50),
-	@apellido	VARCHAR(50),
-	@direccion	VARCHAR(50),
-	@email		VARCHAR(50),
-	@contraseña		VARCHAR(50)
+    @idT int,
+    @nombreT		VARCHAR(50),
+	@apellidoT	VARCHAR(50),
+	@direccionT	VARCHAR(50),
+	@emailT		VARCHAR(50),
+	@contraseñaT		VARCHAR(50)
 AS
 update tutor set
-Nombre = @nombre, Apellido = @apellido, Direccion = @direccion, Email = @email, Contraseña = @contraseña
-where Id = @id
+nombre_tutor = @nombreT, apellido_tutor = @apellidoT, direccion_tutor = @direccionT, email_tutor = @emailT, contraseña_tutor = @contraseñaT
+where id_tutor = @idT
 go
 
 
 
 create proc sp_eliminarTutor
-@id int
+@idT int
 as
 begin
-Delete tutor where Id=@id
+Delete tutor where id_tutor=@idT
 end 
+go
+
+
+create proc sp_listarTutor
+as
+begin
+select id_tutor,nombre_tutor,apellido_tutor,direccion_tutor,email_tutor,contraseña_tutor from TUTOR
+end
 go
 
 /* INSERTS */
 
-EXEC SP_EMPLEADO_INSERT 'nombre1','apellido1','direccion1','email1','clave1'
+EXEC sp_registroTutor'nombre1','apellido1','direccion1','email1','clave1'
+exec sp_modificarTutor '1', 'nombrddd','apellido1','direccion1','email1','clave1'
+exec sp_eliminarTutor '1'
+exec sp_listarTutor

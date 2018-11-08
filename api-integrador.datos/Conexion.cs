@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace api_integrador.datos
 {
-    public class Conexion
+    public class conexion
     {
         SqlConnection cn;
         public SqlConnection conecta()

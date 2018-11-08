@@ -8,11 +8,11 @@ namespace api_integrador.modelos
 {
     public class Tutor
     {
-        public int id { get; set; }
-        public string nombre { get; set; }
-        public string direccion { get; set; }
-        public string apellido { get; set; }
-        public string email { get; set; }
-        public string contraseña { get; set; }
+        public int idTutor { get; set; }
+        public string nombreTutor { get; set; }
+        public string apellidoTutor { get; set; }
+        public string direccionTutor { get; set; }
+        public string emailTutor { get; set; }
+        public string contraseñaTutor { get; set; }
     }
 }
