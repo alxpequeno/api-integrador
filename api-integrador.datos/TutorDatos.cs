@@ -11,7 +11,7 @@ namespace api_integrador.datos
 {
     public class TutorDatos
     {
-        conexion cn = new conexion();
+        conexionbd cn = new conexionbd();
 
         public void RegistrarTutor(Tutor tutor) {
             SqlConnection cnx = cn.conecta();
