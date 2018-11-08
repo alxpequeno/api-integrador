@@ -29,6 +29,15 @@ namespace api_integrador.Controllers
             return mensaje;
         }
 
+
+        [HttpGet]
+        public Tutor GetTutorById(int id)
+        {
+            var lista = negociosT.ListarTutores();
+            Tutor tutor = lista.FirstOrDefault(x => x.idTutor == id);
+            return tutor;
+        }
+
         [HttpPost]
         public string ActualizarTutor(Tutor tutor)
         {
