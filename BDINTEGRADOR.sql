@@ -12,7 +12,7 @@ USE BDINTEGRADOR
 GO
 
 CREATE TABLE EMPLEADO (
-	Id			INT			 NOT NULL	IDENTITY(1,1)  PRIMARY KEY,
+	Id			INT		     NOT NULL	IDENTITY(1,1)  PRIMARY KEY,
 	Nombre		VARCHAR(50)  NOT NULL,
 	Apellido	VARCHAR(50)  NOT NULL,
 	Direccion	VARCHAR(50)  NOT NULL,
@@ -37,7 +37,7 @@ GO
 
 
 CREATE TABLE TUTOR (
-	id_tutor			INT			 NOT NULL	IDENTITY(1,1)  PRIMARY KEY,
+	id_tutor			INT	 NOT NULL	IDENTITY(1,1)  PRIMARY KEY,
 	nombre_tutor		VARCHAR(50)  NOT NULL,
 	apellido_tutor	VARCHAR(50)  NOT NULL,
 	direccion_tutor	VARCHAR(50)  NOT NULL,
@@ -98,3 +98,178 @@ EXEC sp_registroTutor'nombre1','apellido1','direccion1','email1','clave1'
 exec sp_modificarTutor '1', 'nombrddd','apellido1','direccion1','email1','clave1'
 exec sp_eliminarTutor '1'
 exec sp_listarTutor
+go
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+--ALUMNOS
+--TABLA DE ALUMNOS
+
+CREATE TABLE ALUMNOS(
+idAlumno int  identity(1,1) primary key,
+emailAlumno varchar(50) not null,
+nombreAlumno varchar(50) not null,
+apellidoAlumno varchar(50) not null,
+contraseñaAlumno varchar(50) not null
+)
+go
+
+
+--procedures para los alumnos
+--listar alumnos
+CREATE PROC SP_LISTAR_ALUMNOS
+as
+BEGIN
+
+select idAlumno, nombreAlumno,apellidoAlumno,emailAlumno  from ALUMNOS
+END
+GO
+
+--crear alumnos
+CREATE PROC SP_REGISTRAR_ALUMNOS
+@nombreA varchar(50),
+@apellidoA varchar(50),
+@emailA varchar(50),
+@contraseñaA varchar(50)
+AS
+BEGIN
+
+ insert into ALUMNOS(nombreAlumno,apellidoAlumno,emailAlumno,contraseñaAlumno)
+ values(@nombreA,@apellidoA,@emailA,@contraseñaA)
+
+END
+GO
+
+--modificar alumno sin contraseña
+CREATE PROC SP_MODIFICAR_ALUMNO
+@idA int,
+@nombreA varchar(50),
+@apellidoA varchar(50),
+@emailA varchar(50),
+@contraseñaA varchar(50)
+AS
+BEGIN 
+UPDATE ALUMNOS
+SET 
+nombreAlumno=@nombreA, apellidoAlumno=@apellidoA,emailAlumno=@emailA , contraseñaAlumno=@contraseñaA
+WHERE   idAlumno=@idA
+END
+GO
+
+--modificar contraseña
+CREATE PROC SP_MODIFICAR_CONTRASEÑA_ALUMNO
+@idA int,
+@contraseñaA varchar(50)
+AS
+BEGIN 
+UPDATE ALUMNOS
+SET 
+contraseñaAlumno=@contraseñaA
+where  idAlumno=@idA
+END
+GO
+
+
+CREATE PROC SP_ELIMINAR_ALUMNO
+@idA int
+AS
+BEGIN
+
+DELETE ALUMNOS WHERE idAlumno=@idA
+
+END
+GO
+
+
+
+--TUTORIAS
+
+--TABLA TUTORIAS
+
+CREATE TABLE TUTORIAS(
+idTutoria int identity(1,1)not null,--el id es para contar las turorias que existen en total,
+codigoTutoria char(8),
+tituloTutoria varchar(100),
+categoriaTutoria varchar(50),
+fechaTutoria date,
+horaTutoria char(5),
+ubicacionTutoria varchar(50),
+precioTutoria money,
+descipcionTutoria varchar(500),
+idA int references ALUMNOS,
+id_tutor int references TUTOR   
+);
+GO
+
+--PROCEDURES DE TUTORIAS
+
+CREATE PROC SP_LISTAR_TUTORIAS_TUTOR
+@idT int
+AS
+BEGIN
+SELECT codigoTutoria,tituloTutoria,categoriaTutoria,fechaTutoria,horaTutoria,ubicacionTutoria,precioTutoria,DescipcionTutoria,id_tutor   FROM TUTORIAS
+where id_tutor=@idT
+END 
+GO
+
+
+
+CREATE PROC SP_LISTAR_TUTORIAS_EMPLEADO
+AS
+BEGIN
+
+SELECT idTutoria,codigoTutoria,tituloTutoria,categoriaTutoria,fechaTutoria,
+horaTutoria,ubicacionTutoria,precioTutoria,DescipcionTutoria  
+ FROM TUTORIAS
+
+END
+GO
+
+CREATE PROC SP_LISTAR_TUTORIAS_X_FECHA
+@fechaT date
+AS
+BEGIN
+
+SELECT idTutoria,codigoTutoria,tituloTutoria,categoriaTutoria,fechaTutoria,
+horaTutoria,ubicacionTutoria,precioTutoria,DescipcionTutoria  
+ FROM TUTORIAS
+ WHERE fechaTutoria=@fechaT
+
+END
+GO
+
+
+CREATE PROC SP_LISTAR_TUTORIAS_X_CATEGORIA
+@categoriaT varchar(50)
+AS
+BEGIN
+
+SELECT idTutoria,codigoTutoria,tituloTutoria,categoriaTutoria,fechaTutoria,
+horaTutoria,ubicacionTutoria,precioTutoria,DescipcionTutoria  
+ FROM TUTORIAS
+ WHERE categoriaTutoria=@categoriaT
+
+END
+GO
+
+
+CREATE PROC SP_LISTAR_TUTORIAS_X_TITULO
+@tituloT varchar(100)
+AS
+BEGIN
+
+SELECT idTutoria,codigoTutoria,tituloTutoria,categoriaTutoria,fechaTutoria,
+horaTutoria,ubicacionTutoria,precioTutoria,DescipcionTutoria  
+ FROM TUTORIAS
+ WHERE tituloTutoria LIKE '%'+@tituloT+'%'
+
+END
+GO
+
+
+
+
+
+
