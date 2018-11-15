@@ -1,10 +1,10 @@
-﻿using System;
+﻿using api_integrador.modelos;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using api_integrador.modelos;
 
 namespace api_integrador.datos
 {
@@ -13,11 +13,12 @@ namespace api_integrador.datos
         conexionbd cn = new conexionbd();
 
 
-        public List<Alumnos> listarAlumnos(){
+        public List<Alumnos> listarAlumnos()
+        {
             SqlConnection cnx = cn.conecta();
 
             List<Alumnos> alumnos = null;
-           string query = "SP_LISTAR_ALUMNOS";
+            string query = "SP_LISTAR_ALUMNOS";
             SqlCommand comando = new SqlCommand(query, cnx);
             comando.CommandType = System.Data.CommandType.StoredProcedure;
             cnx.Open();
@@ -26,7 +27,8 @@ namespace api_integrador.datos
             {
                 alumnos = new List<Alumnos>();
 
-                while (reader.Read()) {
+                while (reader.Read())
+                {
 
                     Alumnos a = new Alumnos();
                     a.idAlumno = int.Parse(reader["idAlumno"].ToString());
@@ -43,8 +45,9 @@ namespace api_integrador.datos
             }
             cnx.Close();
 
-                return alumnos;
+            return alumnos;
         }
+
 
 
 
@@ -96,8 +99,6 @@ namespace api_integrador.datos
         }
 
 
-     
-}
 
+    }
 }
-

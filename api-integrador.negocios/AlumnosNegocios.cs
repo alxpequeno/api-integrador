@@ -19,7 +19,7 @@ namespace api_integrador.negocios
             string mensaje = "";
             try
             {
-                datosA.RegistrarAlumnos(alumnos);
+                datosA.registrarAlumno(alumnos);
                 mensaje = "Alumno Registrado";
             }
             catch (Exception ex)
@@ -32,7 +32,7 @@ namespace api_integrador.negocios
 
         public List<Alumnos> ListarAlumnos()
         {
-            return datosA.ListarAlumnos();
+            return datosA.listarAlumnos();
         }
 
 
@@ -48,11 +48,11 @@ namespace api_integrador.negocios
                 }
                 else
                 {
-                    var existeAlumno = datosA.ListarAlumnos().Any(x => x.idAlumno == alumnos.idAlumno);
+                    var existeAlumno = datosA.listarAlumnos().Any(x => x.idAlumno == alumnos.idAlumno);
                     if (existeAlumno)
                     {
 
-                        datosA.ActualizarAlumnos(alumnos);
+                        datosA.actualizarAlumno(alumnos);
                         mensaje = "Alumno actualizado";
                     }
                     else
@@ -78,10 +78,10 @@ namespace api_integrador.negocios
                 }
                 else
                 {
-                    var existeAlumno = datosA.ListarAlumnos().Any(x => x.idAlumno == idAlumno);
+                    var existeAlumno = datosA.listarAlumnos().Any(x => x.idAlumno == idAlumno);
                     if (existeAlumno)
                     {
-                        datosA.EliminarAlumnos(idAlumno);
+                        datosA.eliminarAlumno(idAlumno);
                         mensaje = "Alumno eliminado";
                     }
                     else

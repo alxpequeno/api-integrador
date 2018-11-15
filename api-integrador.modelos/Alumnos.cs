@@ -13,7 +13,7 @@ namespace api_integrador.modelos
         public string nombreAlumno { get; set; }
         public string apellidoAlumno { get; set; }
         public string contraseñaAlumno { get; set; }
-        
+
 
     }
 }
