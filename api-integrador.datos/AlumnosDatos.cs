@@ -17,7 +17,7 @@ namespace api_integrador.datos
             SqlConnection cnx = cn.conecta();
 
             List<Alumnos> alumnos = null;
-           string query = "";
+           string query = "SP_LISTAR_ALUMNOS";
             SqlCommand comando = new SqlCommand(query, cnx);
             comando.CommandType = System.Data.CommandType.StoredProcedure;
             cnx.Open();
@@ -54,7 +54,7 @@ namespace api_integrador.datos
 
             SqlConnection cnx = cn.conecta();
             cnx.Open();
-            string query = "";
+            string query = "SP_REGISTRAR_ALUMNOS";
             SqlCommand cm = new SqlCommand(query, cnx);
             cm.CommandType = System.Data.CommandType.StoredProcedure;
             cm.Parameters.AddWithValue("@nombreA", alumnos.nombreAlumno);
@@ -71,7 +71,7 @@ namespace api_integrador.datos
 
             SqlConnection cnx = cn.conecta();
             cnx.Open();
-            string query = "";
+            string query = "SP_ELIMINAR_ALUMNO";
             SqlCommand cm = new SqlCommand(query, cnx);
             cm.CommandType = System.Data.CommandType.StoredProcedure;
             cm.Parameters.AddWithValue("@idA", idAlumno);
@@ -85,7 +85,7 @@ namespace api_integrador.datos
 
             SqlConnection cnx = cn.conecta();
             cnx.Open();
-            string query = "";
+            string query = "SP_MODIFICAR_ALUMNO";
             SqlCommand cm = new SqlCommand(query, cnx);
             cm.CommandType = System.Data.CommandType.StoredProcedure;
             cm.Parameters.AddWithValue("@idA", alumnos.idAlumno);
