@@ -13,11 +13,11 @@ namespace api_integrador.datos
         conexionbd cn = new conexionbd();
 
 
-        public List<Alumnos> listarAlumnos()
+        public List<Alumno> listarAlumnos()
         {
             SqlConnection cnx = cn.conecta();
 
-            List<Alumnos> alumnos = null;
+            List<Alumno> alumnos = null;
             string query = "SP_LISTAR_ALUMNOS";
             SqlCommand comando = new SqlCommand(query, cnx);
             comando.CommandType = System.Data.CommandType.StoredProcedure;
@@ -25,16 +25,16 @@ namespace api_integrador.datos
             SqlDataReader reader = comando.ExecuteReader();
             if (reader.HasRows)
             {
-                alumnos = new List<Alumnos>();
+                alumnos = new List<Alumno>();
 
                 while (reader.Read())
                 {
 
-                    Alumnos a = new Alumnos();
+                    Alumno a = new Alumno();
                     a.idAlumno = int.Parse(reader["idAlumno"].ToString());
                     a.nombreAlumno = reader["nombreAlumno"].ToString();
                     a.apellidoAlumno = reader["apellidoAlumno"].ToString();
-                    a.emailAlumno = reader["emailAlumno  "].ToString();
+                    a.emailAlumno = reader["emailAlumno"].ToString();
 
                     alumnos.Add(a);
 
@@ -52,7 +52,7 @@ namespace api_integrador.datos
 
 
 
-        public void registrarAlumno(Alumnos alumnos)
+        public void registrarAlumno(Alumno alumnos)
         {
 
             SqlConnection cnx = cn.conecta();
@@ -69,7 +69,7 @@ namespace api_integrador.datos
 
         }
 
-        public void eliminarAlumno(int idAlumno)
+        public void eliminarAlumno(string email)
         {
 
             SqlConnection cnx = cn.conecta();
@@ -77,13 +77,13 @@ namespace api_integrador.datos
             string query = "SP_ELIMINAR_ALUMNO";
             SqlCommand cm = new SqlCommand(query, cnx);
             cm.CommandType = System.Data.CommandType.StoredProcedure;
-            cm.Parameters.AddWithValue("@idA", idAlumno);
+            cm.Parameters.AddWithValue("@email", email);
             cm.ExecuteNonQuery();
             cnx.Close();
 
         }
 
-        public void actualizarAlumno(Alumnos alumnos)
+        public void actualizarAlumno(Alumno alumnos)
         {
 
             SqlConnection cnx = cn.conecta();
@@ -91,11 +91,13 @@ namespace api_integrador.datos
             string query = "SP_MODIFICAR_ALUMNO";
             SqlCommand cm = new SqlCommand(query, cnx);
             cm.CommandType = System.Data.CommandType.StoredProcedure;
-            cm.Parameters.AddWithValue("@idA", alumnos.idAlumno);
             cm.Parameters.AddWithValue("@nombreA", alumnos.nombreAlumno);
             cm.Parameters.AddWithValue("@apellidoA", alumnos.apellidoAlumno);
             cm.Parameters.AddWithValue("@emailA", alumnos.emailAlumno);
             cm.Parameters.AddWithValue("@contraseñaA", alumnos.contraseñaAlumno);
+
+            cm.ExecuteNonQuery();
+            cnx.Close();
         }
 
 

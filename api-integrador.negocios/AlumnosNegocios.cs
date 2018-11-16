@@ -14,7 +14,7 @@ namespace api_integrador.negocios
         AlumnosDatos datosA = new AlumnosDatos();
 
 
-        public string RegistrarAlumnos(Alumnos alumnos)
+        public string RegistrarAlumnos(Alumno alumnos)
         {
             string mensaje = "";
             try
@@ -30,25 +30,20 @@ namespace api_integrador.negocios
         }
 
 
-        public List<Alumnos> ListarAlumnos()
+        public List<Alumno> ListarAlumnos()
         {
             return datosA.listarAlumnos();
         }
 
 
 
-        public string ActualizarAlumnos(Alumnos alumnos)
+        public string ActualizarAlumnos(Alumno alumnos)
         {
             string mensaje = "";
             try
             {
-                if (alumnos.idAlumno == 0)
-                {
-                    mensaje = "Id invalida";
-                }
-                else
-                {
-                    var existeAlumno = datosA.listarAlumnos().Any(x => x.idAlumno == alumnos.idAlumno);
+                
+                    var existeAlumno = datosA.listarAlumnos().Any(x => x.emailAlumno == alumnos.emailAlumno);
                     if (existeAlumno)
                     {
 
@@ -57,7 +52,7 @@ namespace api_integrador.negocios
                     }
                     else
                         mensaje = "Alumno no existe";
-                }
+                
             }
             catch (Exception ex)
             {
@@ -67,26 +62,22 @@ namespace api_integrador.negocios
         }
 
 
-        public string EliminarAlumnos(int idAlumno)
+        public string EliminarAlumnos(string email)
         {
             string mensaje = "";
             try
             {
-                if (idAlumno == 0)
-                {
-                    mensaje = "Id invalida";
-                }
-                else
-                {
-                    var existeAlumno = datosA.listarAlumnos().Any(x => x.idAlumno == idAlumno);
+                
+                
+                    var existeAlumno = datosA.listarAlumnos().Any(x => x.emailAlumno == email);
                     if (existeAlumno)
                     {
-                        datosA.eliminarAlumno(idAlumno);
+                        datosA.eliminarAlumno(email);
                         mensaje = "Alumno eliminado";
                     }
                     else
                         mensaje = "Alumno no existe";
-                }
+                
             }
             catch (Exception ex)
             {

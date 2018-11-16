@@ -4,41 +4,39 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using api_integrador.negocios;
 using api_integrador.modelos;
-using System.Web.Http.Cors;
 
 namespace api_integrador.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class EmpleadoController : ApiController
+    public class AlumnoController : ApiController
     {
+        AlumnosNegocios negocios = new AlumnosNegocios();
 
-        EmpleadoNegocios negocios = new EmpleadoNegocios();
-
-        [HttpPost,HttpOptions]
-        public string CrearEmpleado(Empleado empleado)
+        [HttpPost, HttpOptions]
+        public string CrearAlumno(Alumno alumno)
         {
             string mensaje = "";
-            mensaje = negocios.CrearEmpleado(empleado);
+            mensaje = negocios.RegistrarAlumnos(alumno);
             return mensaje;
         }
 
         [HttpPost, HttpOptions]
-        public string ActualizarEmpleado(Empleado empleado)
+        public string ActualizarAlumno(Alumno alumno)
         {
             string mensaje = "";
-            mensaje = negocios.ActualizarEmpleado(empleado);
+            mensaje = negocios.ActualizarAlumnos(alumno);
             return mensaje;
         }
 
         [HttpPost, HttpOptions]
-        public string EliminarEmpleado(Empleado empleado)
+        public string EliminarAlumno(Alumno alumno)
         {
             string mensaje = "";
-            mensaje = negocios.EliminarEmpleado(empleado.email);
+            mensaje = negocios.EliminarAlumnos(alumno.emailAlumno);
             return mensaje;
         }
-
     }
 }

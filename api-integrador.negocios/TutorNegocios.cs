@@ -42,13 +42,9 @@ namespace api_integrador.negocios
             string mensaje = "";
             try
             {
-                if (tutor.idTutor == 0)
-                {
-                    mensaje = "Id invalida";
-                }
-                else
-                {
-                    var existeTutor = datosT.ListarTutores().Any(x => x.idTutor == tutor.idTutor);
+               
+                
+                    var existeTutor = datosT.ListarTutores().Any(x => x.emailTutor == tutor.emailTutor);
                     if (existeTutor)
                     {
                         
@@ -57,35 +53,31 @@ namespace api_integrador.negocios
                     }
                     else
                         mensaje = "Tutor no existe";
-                }
+                
             }
             catch (Exception ex)
             {
-                mensaje = "No se creo el tutor " + ex.Message;
+                mensaje = "No se actualizo el tutor " + ex.Message;
             }
             return mensaje;
         }
 
-        public string EliminarTutor(int idTutor)
+        public string EliminarTutor(string email)
         {
             string mensaje = "";
             try
             {
-                if (idTutor == 0)
-                {
-                    mensaje = "Id invalida";
-                }
-                else
-                {
-                    var existeTutor = datosT.ListarTutores().Any(x => x.idTutor == idTutor);
+                
+                
+                    var existeTutor = datosT.ListarTutores().Any(x => x.emailTutor == email);
                     if (existeTutor)
                     {
-                        datosT.EliminarTutor(idTutor);
+                        datosT.EliminarTutor(email);
                         mensaje = "Tutor eliminado";
                     }
                     else
                         mensaje = "Tutor no existe";
-                }
+                
             }
             catch (Exception ex)
             {

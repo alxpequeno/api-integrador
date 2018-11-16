@@ -34,7 +34,36 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE SP_EMPLEADO_UPDATE
+	@nombre		VARCHAR(50),
+	@apellido	VARCHAR(50),
+	@direccion	VARCHAR(50),
+	@email		VARCHAR(50),
+	@clave		VARCHAR(50)
+AS
+BEGIN
 
+	UPDATE EMPLEADO 
+		SET Nombre=@nombre, Apellido=@apellido,Direccion=@direccion,Clave=@clave
+		WHERE Email=@email
+END
+GO
+
+CREATE PROCEDURE SP_EMPLEADO_LIST
+AS
+BEGIN
+
+	SELECT Id, Nombre, Apellido, Direccion, Email, Clave FROM EMPLEADO 
+
+END
+GO
+
+CREATE PROCEDURE SP_EMPLEADO_DELETE
+@email VARCHAR(50)
+AS
+	DELETE FROM EMPLEADO
+	WHERE Email = @email
+GO
 
 CREATE TABLE TUTOR (
 	id_tutor			INT	 NOT NULL	IDENTITY(1,1)  PRIMARY KEY,
@@ -70,17 +99,17 @@ create proc sp_modificarTutor
 	@contraseñaT		VARCHAR(50)
 AS
 update tutor set
-nombre_tutor = @nombreT, apellido_tutor = @apellidoT, direccion_tutor = @direccionT, email_tutor = @emailT, contraseña_tutor = @contraseñaT
-where id_tutor = @idT
+nombre_tutor = @nombreT, apellido_tutor = @apellidoT, direccion_tutor = @direccionT, contraseña_tutor = @contraseñaT
+where email_tutor = @emailT
 go
 
 
 
 create proc sp_eliminarTutor
-@idT int
+@email varchar(50)
 as
 begin
-Delete tutor where id_tutor=@idT
+Delete tutor where email_tutor=@email
 end 
 go
 
@@ -144,7 +173,6 @@ GO
 
 --modificar alumno sin contraseña
 CREATE PROC SP_MODIFICAR_ALUMNO
-@idA int,
 @nombreA varchar(50),
 @apellidoA varchar(50),
 @emailA varchar(50),
@@ -153,8 +181,8 @@ AS
 BEGIN 
 UPDATE ALUMNOS
 SET 
-nombreAlumno=@nombreA, apellidoAlumno=@apellidoA,emailAlumno=@emailA , contraseñaAlumno=@contraseñaA
-WHERE   idAlumno=@idA
+nombreAlumno=@nombreA, apellidoAlumno=@apellidoA , contraseñaAlumno=@contraseñaA
+WHERE   emailAlumno=@emailA
 END
 GO
 
@@ -173,11 +201,11 @@ GO
 
 
 CREATE PROC SP_ELIMINAR_ALUMNO
-@idA int
+@email varchar(50)
 AS
 BEGIN
 
-DELETE ALUMNOS WHERE idAlumno=@idA
+DELETE ALUMNOS WHERE emailAlumno=@email
 
 END
 GO
@@ -268,7 +296,13 @@ horaTutoria,ubicacionTutoria,precioTutoria,DescipcionTutoria
 END
 GO
 
-
+CREATE VIEW USUARIO AS
+	SELECT Email,Clave,1 as 'isEmpleado',0 as 'isAlumno',0 as 'isTutor' FROM EMPLEADO E
+	UNION
+	SELECT emailAlumno,contraseñaAlumno,0,1,0 FROM ALUMNOS
+	UNION
+	SELECT email_tutor,contraseña_tutor,0,0,1 FROM TUTOR
+GO
 
 
 

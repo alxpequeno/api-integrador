@@ -30,14 +30,14 @@ namespace api_integrador.datos
         }
 
 
-        public void EliminarTutor(int idTutor)
+        public void EliminarTutor(string email)
         {
             SqlConnection cnx = cn.conecta();
             cnx.Open();
             string sqlStatement = "sp_eliminarTutor";
             SqlCommand comando = new SqlCommand(sqlStatement, cnx);
             comando.CommandType = System.Data.CommandType.StoredProcedure;
-            comando.Parameters.AddWithValue("@idT", idTutor);
+            comando.Parameters.AddWithValue("@email", email);
             comando.ExecuteNonQuery();
             cnx.Close();
         }

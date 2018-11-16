@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace api_integrador.modelos
 {
-    public class Alumnos
+    public class Alumno
     {
         public int idAlumno { get; set; }
         public string emailAlumno { get; set; }

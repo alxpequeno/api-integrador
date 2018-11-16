@@ -28,5 +28,64 @@ namespace api_integrador.negocios
 
             return mensaje;
         }
+
+        public string ActualizarEmpleado(Empleado empleado)
+        {
+            string mensaje = "";
+            try
+            {
+                
+               
+                
+                    var existeEmpleado = datos.ListarEmpleados().Any(x => x.email == empleado.email);
+                    if (existeEmpleado)
+                    {
+
+                        datos.ActualizarEmpleado(empleado);
+                        mensaje = "Empleado actualizado";
+                    }
+                    else
+                        mensaje = "Empleado no existe";
+                
+            }
+            catch (Exception ex)
+            {
+                mensaje = "No se actualizo el empleado: " + ex.Message;
+            }
+            return mensaje;
+        }
+
+        public List<Empleado> ListarEmpleados()
+        {
+            return datos.ListarEmpleados();
+        }
+
+        public string EliminarEmpleado(string email)
+        {
+            string mensaje = "";
+            try
+            {
+               
+               
+                    var existeEmpleado = datos.ListarEmpleados().Any(x => x.email == email);
+                    if (existeEmpleado)
+                    {
+                        datos.EliminarEmpleado(email);
+                        mensaje = "Empleado eliminado";
+                    }
+                    else
+                        mensaje = "Empleado no existe";
+                
+            }
+            catch (Exception ex)
+            {
+                mensaje = "No se pudo eliminar el empleado : " + ex.Message;
+            }
+
+            return mensaje;
+        }
+
     }
+
+
 }
