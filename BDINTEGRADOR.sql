@@ -138,7 +138,7 @@ go
 
 CREATE TABLE ALUMNOS(
 idAlumno int  identity(1,1) primary key,
-emailAlumno varchar(50) not null,
+emailAlumno varchar(50) not null identity,
 nombreAlumno varchar(50) not null,
 apellidoAlumno varchar(50) not null,
 contraseñaAlumno varchar(50) not null
@@ -306,4 +306,38 @@ GO
 
 
 
+/*procedure para registrar y no se dupliquen los correos en las otras tablas*/
+CREATE PROC SP_REGISTRAR_ALUMNOS_2
+@nombreA varchar(50),
+@apellidoA varchar(50),
+@emailA varchar(50),
+@contraseñaA varchar(50)
+AS
 
+BEGIN
+
+if @emailA=(select email_tutor from TUTOR where email_tutor=@emailA)
+	print 'Email ya registrado'
+	else if @emailA=(select Email from EMPLEADO where Email=@emailA)
+	print 'Email ya registrado'
+	else if  @emailA=(select emailAlumno from ALUMNOS where emailAlumno=@emailA)
+	print 'Email ya registrado'
+	else 
+	 insert into ALUMNOS(nombreAlumno,apellidoAlumno,emailAlumno,contraseñaAlumno)
+		values(@nombreA,@apellidoA,@emailA,@contraseñaA)
+
+END
+GO
+
+
+exec SP_REGISTRAR_ALUMNOS_2 'Hector Jose','Romero','Jose@hotmail.com','pedrito1234' 
+
+insert into empleado (Nombre,Apellido,Direccion,Email,Clave) 
+values('Willian','Pantoja','calle siempre viva 123', 'Willian@hotmail.com','hector123' )
+
+insert into TUTOR (nombre_tutor,apellido_tutor,direccion_tutor,email_tutor,contraseña_tutor) 
+values('Hector','Pantoja','calle siempre viva 123', 'Hector@hotmail.com','hector123' )
+
+select * from TUTOR
+select * from Alumnos
+select * from empleado
