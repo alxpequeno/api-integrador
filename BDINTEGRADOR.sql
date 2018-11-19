@@ -138,7 +138,7 @@ go
 
 CREATE TABLE ALUMNOS(
 idAlumno int  identity(1,1) primary key,
-emailAlumno varchar(50) not null identity,
+emailAlumno varchar(50) not null unique,
 nombreAlumno varchar(50) not null,
 apellidoAlumno varchar(50) not null,
 contraseñaAlumno varchar(50) not null
@@ -304,6 +304,13 @@ CREATE VIEW USUARIO AS
 	SELECT email_tutor,contraseña_tutor,0,0,1 FROM TUTOR
 GO
 
+CREATE PROCEDURE SP_LOGIN
+@email VARCHAR(50),
+@clave VARCHAR(50)
+AS
+	SELECT * FROM USUARIO
+	WHERE Email = @email and Clave = @clave
+GO
 
 
 /*procedure para registrar y no se dupliquen los correos en las otras tablas*/
