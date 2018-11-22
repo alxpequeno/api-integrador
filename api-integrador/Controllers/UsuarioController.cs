@@ -13,14 +13,24 @@ namespace api_integrador.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class UsuarioController : ApiController
     {
-        UsuarioNegocios negocios = new UsuarioNegocios();
+        private UsuarioNegocios negocios;
+
+        public UsuarioController() 
+        {
+            negocios = new UsuarioNegocios();
+        }
+
+        [HttpGet]
+        public List<Usuario> ListaTutoresPendientes() 
+        {
+            return negocios.ListaTutoresPendientes();
+        }
 
         [HttpPost, HttpOptions]
-        public string login(Usuario usuario)
-        {
-            string mensaje = "";
-            mensaje = negocios.obtenerUsuario(usuario);
-            return mensaje;
+        public Usuario Login(UsuarioViewModel modelo) {
+            Usuario usuario = negocios.Login(modelo.email, modelo.clave);
+
+            return usuario;
         }
     }
 }

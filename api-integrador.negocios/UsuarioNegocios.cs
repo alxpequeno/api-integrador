@@ -10,27 +10,21 @@ namespace api_integrador.negocios
 {
     public class UsuarioNegocios
     {
-        UsuarioDatos datos = new UsuarioDatos();
+        private UsuarioDatos datos;
 
-        public string obtenerUsuario(Usuario usuario)
+        public UsuarioNegocios()
         {
-            string mensaje = "";
+            datos = new UsuarioDatos();
+        }
 
-            try
-            {
-                Usuario usuarioRegistrado = new Usuario();
-                usuarioRegistrado = datos.obtenerUsuario(usuario);
+        public Usuario Login(string email, string clave)
+        {
+            return datos.Login(email,clave);
+        }
 
-                if (usuario.isAlumno) mensaje = "isAlumno";
-                if (usuario.isEmpleado) mensaje = "isEmpleado";
-                if (usuario.isTutor) mensaje = "isTutor";
-            }
-            catch(Exception ex)
-            {
-                mensaje = "No se encontro el usuario : " + ex.Message;
-            }
-
-            return mensaje;
+        public List<Usuario> ListaTutoresPendientes()
+        {
+            return datos.ListaTutoresPendientes();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace api_integrador.datos
         public SqlConnection conecta()
         {
             cn = new SqlConnection(
-            "server=.;database=BDINTEGRADOR;Integrated Security=true");
+                "server=sql5021.site4now.net;database=DB_A42E0A_integrador;uid=DB_A42E0A_integrador_admin;pwd=APIintegrador123");
             return cn;
         }
     }
