@@ -108,5 +108,13 @@ namespace api_integrador.Controllers
             TutorViewModel tutor = lista.FirstOrDefault(x => x.id == id);
             return tutor;
         }
+
+        [HttpGet]
+        public Usuario GetEmpleadoById(int id)
+        {
+            var lista = negocios.ListarEmpleados();
+            Usuario empleado = lista.FirstOrDefault(x => x.id == id);
+            return empleado;
+        }
     }
 }
