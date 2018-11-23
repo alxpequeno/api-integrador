@@ -169,5 +169,79 @@ namespace api_integrador.datos
         }
 
 
+
+
+        public void RegistrarEmpleado(Usuario usuario)
+        {
+            conexion.Open();
+            string sqlStatement = "SP_EMP_INSERT";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@nombre", usuario.nombre);
+            comando.Parameters.AddWithValue("@apellido", usuario.apellido);
+            comando.Parameters.AddWithValue("@direccion", usuario.direccion);
+            comando.Parameters.AddWithValue("@email", usuario.email);
+            comando.Parameters.AddWithValue("@clave", usuario.clave);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+
+
+        public void EliminarEmpleado(int id)
+        {
+            conexion.Open();
+            string sqlStatement = "SP_EMP_DELETE";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@id", id);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+
+
+        public List<Usuario> ListarEmpleados()
+        {
+            List<Usuario> usuarios = null;
+            string sqlStatement = "SP_EMP_LISTAR";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            conexion.Open();
+            SqlDataReader reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                usuarios = new List<Usuario>();
+                while (reader.Read())
+                {
+                    Usuario usuario = new Usuario();
+                    usuario.id = int.Parse(reader["id"].ToString());
+                    usuario.nombre = reader["nombre"].ToString();
+                    usuario.apellido = reader["apellido"].ToString();
+                    usuario.direccion = reader["direccion"].ToString();
+                    usuario.email = reader["email"].ToString();
+                    usuario.clave = reader["clave"].ToString();
+                    usuarios.Add(usuario);
+                }
+            }
+            conexion.Close();
+            return usuarios;
+        }
+
+
+        public void ActualizarEmpleado(Usuario usuario)
+        {
+
+            conexion.Open();
+            string sqlStatement = "SP_EMP_UPDATE";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@id", usuario.id);
+            comando.Parameters.AddWithValue("@nombre", usuario.nombre);
+            comando.Parameters.AddWithValue("@apellido", usuario.apellido);
+            comando.Parameters.AddWithValue("@direccion", usuario.direccion);
+            comando.Parameters.AddWithValue("@email", usuario.email);
+            comando.Parameters.AddWithValue("@clave", usuario.clave);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
     }
 }

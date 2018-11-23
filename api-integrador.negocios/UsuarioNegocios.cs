@@ -101,5 +101,85 @@ namespace api_integrador.negocios
             return mensaje;
         }
 
+
+
+
+
+
+
+
+        public string RegistrarEmpleado(Usuario usuario)
+        {
+            string mensaje = "";
+            try
+            {
+                datos.RegistrarEmpleado(usuario);
+                mensaje = "Empleado Registrado";
+            }
+            catch (Exception ex)
+            {
+                mensaje = "No se registro el empleado " + ex.Message;
+            }
+            return mensaje;
+        }
+
+
+        public List<Usuario> ListarEmpleados()
+        {
+            return datos.ListarEmpleados();
+        }
+
+
+        public string ActualizarEmpleado(Usuario usuario)
+        {
+            string mensaje = "";
+            try
+            {
+
+
+                var existeEmpleado = datos.ListarEmpleados().Any(x => x.id == usuario.id);
+                if (existeEmpleado)
+                {
+
+                    datos.ActualizarEmpleado(usuario);
+                    mensaje = "Empleado actualizado";
+                }
+                else
+                    mensaje = "Empleado no existe";
+
+            }
+            catch (Exception ex)
+            {
+                mensaje = "No se actualizo el empleado " + ex.Message;
+            }
+            return mensaje;
+        }
+
+
+
+        public string EliminarEmpleado(int id)
+        {
+            string mensaje = "";
+            try
+            {
+
+
+                var existeEmpleado = datos.ListarEmpleados().Any(x => x.id == id);
+                if (existeEmpleado)
+                {
+                    datos.EliminarEmpleado(id);
+                    mensaje = "Empleado eliminado";
+                }
+                else
+                    mensaje = "Empleado";
+
+            }
+            catch (Exception ex)
+            {
+                mensaje = "No se pudo eliminar el empleado : " + ex.Message;
+            }
+
+            return mensaje;
+        }
     }
 }

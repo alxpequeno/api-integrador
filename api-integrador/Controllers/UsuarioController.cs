@@ -65,5 +65,40 @@ namespace api_integrador.Controllers
         }
 
 
+
+
+
+
+        [HttpPost, HttpOptions]
+        public string RegistrarEmpleado(Usuario usuario)
+        {
+            string mensaje = "";
+            mensaje = negocios.RegistrarEmpleado(usuario);
+            return mensaje;
+        }
+
+        [HttpPost, HttpOptions]
+        public string EliminarEmpleado(Usuario usuario)
+        {
+            string mensaje = "";
+            mensaje = negocios.EliminarEmpleado(usuario.id);
+            return mensaje;
+        }
+
+        [HttpPost, HttpOptions]
+        public string ActualizarEmpleado(Usuario usuario)
+        {
+            string mensaje = "";
+            mensaje = negocios.ActualizarEmpleado(usuario);
+            return mensaje;
+        }
+
+        [HttpGet]
+        public List<Usuario> ListarEmpleados()
+        {
+            var listar = negocios.ListarEmpleados();
+            return listar;
+        }
+
     }
 }
