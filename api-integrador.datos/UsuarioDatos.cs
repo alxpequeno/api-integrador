@@ -94,5 +94,80 @@ namespace api_integrador.datos
 
             return usuario;
         }
+
+        public void RegistrarTutor(Usuario usuario)
+        {
+            conexion.Open();
+            string sqlStatement = "SP_TUTOR_INSERT";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@nombre", usuario.nombre);
+            comando.Parameters.AddWithValue("@apellido", usuario.apellido);
+            comando.Parameters.AddWithValue("@direccion", usuario.direccion);
+            comando.Parameters.AddWithValue("@email", usuario.email);
+            comando.Parameters.AddWithValue("@clave", usuario.clave);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+
+
+        public void EliminarTutor(int id)
+        {
+            conexion.Open();
+            string sqlStatement = "SP_TUTOR_DELETE";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@id", id);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+
+
+        public List<Usuario> ListarTutores()
+        {
+            List<Usuario> usuarios = null;
+            string sqlStatement = "SP_TUTOR_LISTAR";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            conexion.Open();
+            SqlDataReader reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                usuarios = new List<Usuario>();
+                while (reader.Read())
+                {
+                    Usuario usuario = new Usuario();
+                    usuario.id = int.Parse(reader["id"].ToString());
+                    usuario.nombre = reader["nombre"].ToString();
+                    usuario.apellido = reader["apellido"].ToString();
+                    usuario.direccion = reader["direccion"].ToString();
+                    usuario.email = reader["email"].ToString();
+                    usuario.clave = reader["clave"].ToString();
+                    usuarios.Add(usuario);
+                }
+            }
+            conexion.Close();
+            return usuarios;
+        }
+
+
+        public void ActualizarTutor(Usuario usuario)
+        {
+
+            conexion.Open();
+            string sqlStatement = "SP_TUTOR_UPDATE";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@id", usuario.id);
+            comando.Parameters.AddWithValue("@nombre", usuario.nombre);
+            comando.Parameters.AddWithValue("@apellido", usuario.apellido);
+            comando.Parameters.AddWithValue("@direccion", usuario.direccion);
+            comando.Parameters.AddWithValue("@email", usuario.email);
+            comando.Parameters.AddWithValue("@clave", usuario.clave);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+
+
     }
 }

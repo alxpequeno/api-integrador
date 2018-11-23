@@ -32,5 +32,38 @@ namespace api_integrador.Controllers
 
             return usuario;
         }
+
+        [HttpPost, HttpOptions]
+        public string RegistrarTutor(Usuario usuario)
+        {
+            string mensaje = "";
+            mensaje = negocios.RegistrarTutor(usuario);
+            return mensaje;
+        }
+
+        [HttpPost, HttpOptions]
+        public string EliminarTutor(Usuario usuario)
+        {
+            string mensaje = "";
+            mensaje = negocios.EliminarTutor(usuario.id);
+            return mensaje;
+        }
+
+        [HttpPost, HttpOptions]
+        public string ActualizarTutor(Usuario usuario)
+        {
+            string mensaje = "";
+            mensaje = negocios.ActualizarTutor(usuario);
+            return mensaje;
+        }
+
+        [HttpGet]
+        public List<Usuario> ListarTutores()
+        {
+            var listar = negocios.ListarTutores();
+            return listar;
+        }
+
+
     }
 }

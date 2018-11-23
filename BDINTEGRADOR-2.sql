@@ -12,6 +12,10 @@ IF OBJECT_ID('SP_LOGIN') IS NOT NULL
     DROP PROCEDURE SP_LOGIN
 GO
 
+IF OBJECT_ID('SP_TUTOR_UPDATE') IS NOT NULL
+    DROP PROCEDURE  SP_TUTOR_UPDATE
+GO
+
 /* DROP TABLES */
 
 IF OBJECT_ID('USUARIO') IS NOT NULL
@@ -91,6 +95,31 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE SP_TUTOR_DELETE
+@id int
+as
+update usuario set Estado='false' where @id=Id
+go
+
+CREATE PROCEDURE SP_TUTOR_LISTAR
+as
+select Id,Nombre,Apellido,Direccion,Email,Clave from
+usuario where isTutor='true' and Estado='true'
+go
+
+CREATE PROCEDURE SP_TUTOR_UPDATE
+    @id   int,
+    @nombre		VARCHAR(50),
+	@apellido	VARCHAR(50),
+	@direccion	VARCHAR(50),
+	@email		VARCHAR(100),
+	@clave		VARCHAR(50)
+AS
+    UPDATE usuario 
+    set Nombre=@nombre,Apellido=@apellido,Direccion=@direccion,Email=@email,Clave=@clave
+	where Id = @id
+GO
+
 /* INSERTS */
 EXEC SP_TUTOR_INSERT 'Julio','Profe','Av. youtube','jp@juliprofe.com','123'
 
@@ -101,3 +130,5 @@ INSERT USUARIO(Nombre,Apellido,Direccion,Email,Clave,isEmpleado,isTutor,isAlumno
 
 EXEC SP_LISTA_TUTORES_PENDIENTES
 
+
+select*from detalle_tutor
