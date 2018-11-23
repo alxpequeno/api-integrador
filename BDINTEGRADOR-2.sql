@@ -162,10 +162,9 @@ GO
 
 
 CREATE PROCEDURE SP_OBTENERTUTORXID
-@id int
 as
 select u.id,u.Nombre,u.Apellido,u.Direccion,u.Email,u.Clave,Curriculum,Antecedentes,Recibo,Foto
-from usuario u inner join detalle_tutor d on u.id = d.idUsuario where isTutor = 'true' and Id = @id
+from usuario u inner join detalle_tutor d on u.id = d.idUsuario where isTutor = 'true'
 go
 
 
@@ -177,7 +176,8 @@ INSERT USUARIO(Nombre,Apellido,Direccion,Email,Clave,isEmpleado,isTutor,isAlumno
 
 /* SELECTS */
 
-exec SP_OBTENERTUTORXID '1'
+exec SP_OBTENERTUTORXID 
+select * from usuarios
 EXEC SP_LISTA_TUTORES_PENDIENTES
 
 
