@@ -12,8 +12,8 @@ IF OBJECT_ID('SP_LOGIN') IS NOT NULL
     DROP PROCEDURE SP_LOGIN
 GO
 
-IF OBJECT_ID('SP_TUTOR_UPDATE') IS NOT NULL
-    DROP PROCEDURE  SP_TUTOR_UPDATE
+IF OBJECT_ID('SP_OBTENERTUTORXID') IS NOT NULL
+    DROP PROCEDURE  SP_OBTENERTUTORXID
 GO
 
 /* DROP TABLES */
@@ -160,6 +160,15 @@ AS
 GO
 
 
+
+CREATE PROCEDURE SP_OBTENERTUTORXID
+@id int
+as
+select u.id,u.Nombre,u.Apellido,u.Direccion,u.Email,u.Clave,Curriculum,Antecedentes,Recibo,Foto
+from usuario u inner join detalle_tutor d on u.id = d.idUsuario where isTutor = 'true' and Id = @id
+go
+
+
 /* INSERTS */
 EXEC SP_TUTOR_INSERT 'Julio','Profe','Av. youtube','jp@juliprofe.com','123'
 
@@ -168,6 +177,7 @@ INSERT USUARIO(Nombre,Apellido,Direccion,Email,Clave,isEmpleado,isTutor,isAlumno
 
 /* SELECTS */
 
+exec SP_OBTENERTUTORXID '1'
 EXEC SP_LISTA_TUTORES_PENDIENTES
 
 

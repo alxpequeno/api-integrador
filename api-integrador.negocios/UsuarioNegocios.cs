@@ -181,5 +181,12 @@ namespace api_integrador.negocios
 
             return mensaje;
         }
+
+
+
+        public List<TutorViewModel> ObtenerTutorxId()
+        {
+            return datos.ObtenerTutorxId();
+        }
     }
 }

@@ -100,5 +100,13 @@ namespace api_integrador.Controllers
             return listar;
         }
 
+
+        [HttpGet]
+        public TutorViewModel GetTutorById(int id)
+        {
+            var lista = negocios.ObtenerTutorxId();
+            TutorViewModel tutor = lista.FirstOrDefault(x => x.id == id);
+            return tutor;
+        }
     }
 }

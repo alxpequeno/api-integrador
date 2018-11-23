@@ -243,5 +243,40 @@ namespace api_integrador.datos
             comando.ExecuteNonQuery();
             conexion.Close();
         }
+
+
+        public List<TutorViewModel> ObtenerTutorxId()
+        {
+            List<TutorViewModel> tutores = null;
+            string sqlStatement = "SP_OBTENERTUTORXID";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            conexion.Open();
+            SqlDataReader reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                tutores = new List<TutorViewModel>();
+                while (reader.Read())
+                {
+                    TutorViewModel tutor = new TutorViewModel();
+                    tutor.id = int.Parse(reader["id"].ToString());
+                    tutor.nombre = reader["nombre"].ToString();
+                    tutor.apellido = reader["apellido"].ToString();
+                    tutor.direccion = reader["direccion"].ToString();
+                    tutor.email = reader["email"].ToString();
+                    tutor.clave = reader["clave"].ToString();
+                    tutor.curriculum = reader["curriculum"].ToString();
+                    tutor.antecedentes = reader["antecedentes"].ToString();
+                    tutor.recibo = reader["recibo"].ToString();
+                    tutor.foto = reader["foto"].ToString();
+                    tutores.Add(tutor);
+                }
+            }
+            conexion.Close();
+            return tutores;
+        }
+
+
+
     }
 }
