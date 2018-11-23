@@ -34,7 +34,8 @@ CREATE TABLE USUARIO (
     isEmpleado  BIT          NOT NULL,
     isTutor     BIT          NOT NULL,
     isAlumno    BIT          NOT NULL,
-    Estado      BIT          NOT NULL    
+    Estado      BIT          NOT NULL,
+    FechaRegistro DATE       NOT NULL   DEFAULT GETDATE()    
 )
 GO
 
@@ -89,6 +90,9 @@ GO
 
 /* INSERTS */
 EXEC SP_TUTOR_INSERT 'Julio','Profe','Av. youtube','jp@juliprofe.com','123'
+
+INSERT USUARIO(Nombre,Apellido,Direccion,Email,Clave,isEmpleado,isTutor,isAlumno,Estado) 
+    VALUES ('a', 'b', 'c', 'admin', 'admin', 'true', 'false', 'false','true')
 
 /* SELECTS */
 
