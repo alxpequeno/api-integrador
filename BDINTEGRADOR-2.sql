@@ -42,6 +42,7 @@ GO
 CREATE TABLE DETALLE_TUTOR(
     IdUsuario   INT,
     isAceptado  BIT,
+    Foto        VARCHAR(MAX),
     Curriculum  VARCHAR(MAX),
     Antecedentes VARCHAR(MAX),
     Recibo       VARCHAR(MAX)
@@ -73,7 +74,7 @@ BEGIN
     
     DECLARE @ID INT = SCOPE_IDENTITY()
 
-    INSERT DETALLE_TUTOR values(@ID,'false','CVURL','AntecedentesURL','ReciboURL')
+    INSERT DETALLE_TUTOR values(@ID,'false','FotoURL','CVURL','AntecedentesURL','ReciboURL')
 END
 GO
 
@@ -85,6 +86,8 @@ BEGIN
     WHERE 
         isTutor = 'true'
         AND D.isAceptado = 'false'
+    ORDER BY 
+        u.FechaRegistro DESC
 END
 GO
 
@@ -97,6 +100,4 @@ INSERT USUARIO(Nombre,Apellido,Direccion,Email,Clave,isEmpleado,isTutor,isAlumno
 /* SELECTS */
 
 EXEC SP_LISTA_TUTORES_PENDIENTES
-
-
 
