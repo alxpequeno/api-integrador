@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace api_integrador.modelos
 {
-    public class Alumno
+    class AlumnoViewModel
     {
+
         public int id { get; set; }
         public string nombre { get; set; }
         public string apellido { get; set; }
