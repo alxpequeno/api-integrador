@@ -32,5 +32,89 @@ namespace api_integrador.Controllers
 
             return usuario;
         }
+
+        [HttpPost, HttpOptions]
+        public string RegistrarTutor(Usuario usuario)
+        {
+            string mensaje = "";
+            mensaje = negocios.RegistrarTutor(usuario);
+            return mensaje;
+        }
+
+        [HttpPost, HttpOptions]
+        public string EliminarTutor(Usuario usuario)
+        {
+            string mensaje = "";
+            mensaje = negocios.EliminarTutor(usuario.id);
+            return mensaje;
+        }
+
+        [HttpPost, HttpOptions]
+        public string ActualizarTutor(Usuario usuario)
+        {
+            string mensaje = "";
+            mensaje = negocios.ActualizarTutor(usuario);
+            return mensaje;
+        }
+
+        [HttpGet]
+        public List<Usuario> ListarTutores()
+        {
+            var listar = negocios.ListarTutores();
+            return listar;
+        }
+
+
+
+
+
+
+        [HttpPost, HttpOptions]
+        public string RegistrarEmpleado(Usuario usuario)
+        {
+            string mensaje = "";
+            mensaje = negocios.RegistrarEmpleado(usuario);
+            return mensaje;
+        }
+
+        [HttpPost, HttpOptions]
+        public string EliminarEmpleado(Usuario usuario)
+        {
+            string mensaje = "";
+            mensaje = negocios.EliminarEmpleado(usuario.id);
+            return mensaje;
+        }
+
+        [HttpPost, HttpOptions]
+        public string ActualizarEmpleado(Usuario usuario)
+        {
+            string mensaje = "";
+            mensaje = negocios.ActualizarEmpleado(usuario);
+            return mensaje;
+        }
+
+        [HttpGet]
+        public List<Usuario> ListarEmpleados()
+        {
+            var listar = negocios.ListarEmpleados();
+            return listar;
+        }
+
+
+        [HttpGet]
+        public TutorViewModel GetTutorById(int id)
+        {
+            var lista = negocios.ObtenerTutorxId();
+            TutorViewModel tutor = lista.FirstOrDefault(x => x.id == id);
+            return tutor;
+        }
+
+        [HttpGet]
+        public Usuario GetEmpleadoById(int id)
+        {
+            var lista = negocios.ListarEmpleados();
+            Usuario empleado = lista.FirstOrDefault(x => x.id == id);
+            return empleado;
+        }
     }
 }

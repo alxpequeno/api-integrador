@@ -12,6 +12,10 @@ IF OBJECT_ID('SP_LOGIN') IS NOT NULL
     DROP PROCEDURE SP_LOGIN
 GO
 
+IF OBJECT_ID('SP_OBTENERTUTORXID') IS NOT NULL
+    DROP PROCEDURE  SP_OBTENERTUTORXID
+GO
+
 /* DROP TABLES */
 
 IF OBJECT_ID('USUARIO') IS NOT NULL
@@ -91,6 +95,79 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE SP_TUTOR_DELETE
+@id int
+as
+update usuario set Estado='false' where @id=Id
+go
+
+CREATE PROCEDURE SP_TUTOR_LISTAR
+as
+select Id,Nombre,Apellido,Direccion,Email,Clave from
+usuario where isTutor='true' and Estado='true'
+go
+
+CREATE PROCEDURE SP_TUTOR_UPDATE
+    @id   int,
+    @nombre		VARCHAR(50),
+	@apellido	VARCHAR(50),
+	@direccion	VARCHAR(50),
+	@email		VARCHAR(100),
+	@clave		VARCHAR(50)
+AS
+    UPDATE usuario 
+    set Nombre=@nombre,Apellido=@apellido,Direccion=@direccion,Email=@email,Clave=@clave
+	where Id = @id
+GO
+
+
+
+CREATE PROCEDURE SP_EMP_DELETE
+@id int
+as
+update usuario set Estado='false' where @id=Id
+go
+
+CREATE PROCEDURE SP_EMP_LISTAR
+as
+select Id,Nombre,Apellido,Direccion,Email,Clave from
+usuario where isEmpleado='true' and Estado='true'
+go
+
+CREATE PROCEDURE SP_EMP_UPDATE
+    @id   int,
+    @nombre		VARCHAR(50),
+	@apellido	VARCHAR(50),
+	@direccion	VARCHAR(50),
+	@email		VARCHAR(100),
+	@clave		VARCHAR(50)
+AS
+    UPDATE usuario 
+    set Nombre=@nombre,Apellido=@apellido,Direccion=@direccion,Email=@email,Clave=@clave
+	where Id = @id
+GO
+
+
+CREATE PROCEDURE SP_EMP_INSERT
+    @nombre		VARCHAR(50),
+	@apellido	VARCHAR(50),
+	@direccion	VARCHAR(50),
+	@email		VARCHAR(100),
+	@clave		VARCHAR(50)
+AS
+    INSERT USUARIO(Nombre,Apellido,Direccion,Email,Clave,isEmpleado,isTutor,isAlumno,Estado) 
+    VALUES (@nombre, @apellido, @direccion, @email, @clave, 'true', 'false', 'false','true')
+GO
+
+
+
+CREATE PROCEDURE SP_OBTENERTUTORXID
+as
+select u.id,u.Nombre,u.Apellido,u.Direccion,u.Email,u.Clave,Curriculum,Antecedentes,Recibo,Foto
+from usuario u inner join detalle_tutor d on u.id = d.idUsuario where isTutor = 'true'
+go
+
+
 /* INSERTS */
 EXEC SP_TUTOR_INSERT 'Julio','Profe','Av. youtube','jp@juliprofe.com','123'
 
@@ -99,5 +176,55 @@ INSERT USUARIO(Nombre,Apellido,Direccion,Email,Clave,isEmpleado,isTutor,isAlumno
 
 /* SELECTS */
 
+exec SP_OBTENERTUTORXID 
+select * from usuarios
 EXEC SP_LISTA_TUTORES_PENDIENTES
+
+
+select*from USUARIO
+
+
+/*Procedure Alumno*/
+
+
+
+CREATE PROCEDURE SP_ALUMNO_LISTAR
+as
+select Id,Nombre,Apellido,Direccion,Email,Clave from
+usuario where isAlumno='true' and Estado='true'
+go
+
+
+
+CREATE PROCEDURE SP_ALUMNO_INSERT
+    @nombre		VARCHAR(50),
+	@apellido	VARCHAR(50),
+	@direccion	VARCHAR(50),
+	@email		VARCHAR(100),
+	@clave		VARCHAR(50)
+AS
+BEGIN
+    INSERT USUARIO(Nombre,Apellido,Direccion,Email,Clave,isEmpleado,isTutor,isAlumno,Estado) 
+    VALUES (@nombre, @apellido, @direccion, @email, @clave, 'false', 'false', 'true','true')
+END
+GO
+
+
+
+CREATE PROCEDURE SP_OBTENER_ALUMNO_X_ID
+@ID int
+as
+select u.id,u.Nombre,u.Apellido,u.Direccion,u.Email,u.Clave
+from usuario u
+ inner join detalle_tutor d 
+ on u.id = d.idUsuario
+ where isAlumno = 'true' and u.id=@ID
+go
+
+
+
+
+
+
+
 
