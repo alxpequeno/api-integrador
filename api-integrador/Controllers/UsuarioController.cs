@@ -21,7 +21,7 @@ namespace api_integrador.Controllers
         }
 
         [HttpGet]
-        public List<Usuario> ListaTutoresPendientes() 
+        public List<TutorViewModel> ListaTutoresPendientes() 
         {
             return negocios.ListaTutoresPendientes();
         }
@@ -156,13 +156,7 @@ namespace api_integrador.Controllers
         }
 
 
-        [HttpGet]
-        public Usuario GetAlumnoById(int id)
-        {
-            var lista = negocios.ObtenerAlumnoxId();
-            Usuario alumno = lista.FirstOrDefault(x => x.id == id);
-            return alumno;
-        }
+       
 
 
 

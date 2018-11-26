@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using api_integrador.modelos;
 using System.Data;
 using System.Data.SqlClient;
@@ -18,10 +14,10 @@ namespace api_integrador.datos
             conexion = cn.conecta();
         }
 
-        public List<Usuario> ListaTutoresPendientes()
+        public List<TutorViewModel> ListaTutoresPendientes()
         {
 
-            List<Usuario> usuarios = null;
+            List<TutorViewModel> usuarios = null;
 
             conexion.Open();
 
@@ -33,21 +29,22 @@ namespace api_integrador.datos
 
             if (lector.HasRows)
             {
-                usuarios = new List<Usuario>();
+                usuarios = new List<TutorViewModel>();
 
                 while (lector.Read())
                 {
-                    var u = new Usuario();
+                    var u = new TutorViewModel();
                     u.id = int.Parse(lector["Id"].ToString());
                     u.nombre = lector["Nombre"].ToString();
                     u.apellido = lector["Apellido"].ToString();
                     u.direccion = lector["Direccion"].ToString();
                     u.email = lector["Email"].ToString();
                     u.clave = lector["Clave"].ToString();
-                    u.isEmpleado = bool.Parse(lector["isEmpleado"].ToString());
-                    u.isTutor = bool.Parse(lector["isTutor"].ToString());
-                    u.isAlumno = bool.Parse(lector["isAlumno"].ToString());
-                    u.estado = bool.Parse(lector["Estado"].ToString());
+                    u.foto = lector["Foto"].ToString();
+                    u.curriculum = lector["Curriculum"].ToString();
+                    u.recibo = lector["Recibo"].ToString();
+                    u.antecedentes = lector["Antecedentes"].ToString();
+                    u.fecha = lector["FechaFormato"].ToString();
 
                     usuarios.Add(u);
                 }

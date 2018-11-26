@@ -14,5 +14,6 @@ namespace api_integrador.modelos
         public string recibo { get; set; }
         public string antecedentes { get; set; }
         public string foto { get; set; }
+        public string fecha { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace api_integrador.negocios
             return datos.Login(email,clave);
         }
 
-        public List<Usuario> ListaTutoresPendientes()
+        public List<TutorViewModel> ListaTutoresPendientes()
         {
             return datos.ListaTutoresPendientes();
         }

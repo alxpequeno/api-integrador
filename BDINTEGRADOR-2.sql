@@ -1,7 +1,5 @@
 /* DROP PROCEDURES */
 
-
-
 IF OBJECT_ID('SP_TUTOR_INSERT') IS NOT NULL
     DROP PROCEDURE SP_TUTOR_INSERT
 GO
@@ -18,7 +16,6 @@ IF OBJECT_ID('SP_OBTENERTUTORXID') IS NOT NULL
     DROP PROCEDURE  SP_OBTENERTUTORXID
 GO
 
-<<<<<<< HEAD
 IF OBJECT_ID('SP_TUTOR_DELETE') IS NOT NULL
     DROP PROCEDURE  SP_TUTOR_DELETE
 GO
@@ -58,7 +55,7 @@ GO
 IF OBJECT_ID('SP_OBTENER_ALUMNO_X_ID') IS NOT NULL
     DROP PROCEDURE  SP_OBTENER_ALUMNO_X_ID
 GO
-=======
+
 IF OBJECT_ID('SP_OBTENER_ALUMNO_X_ID') IS NOT NULL
     DROP PROCEDURE SP_OBTENER_ALUMNO_X_ID
 GO
@@ -81,8 +78,6 @@ GO
 IF OBJECT_ID('SP_ALUMNO_LISTAR') IS NOT NULL
     DROP PROCEDURE SP_ALUMNO_LISTAR
 GO
-
->>>>>>> 5e62809768db8fc6b41f33397c5ea125cb595ce7
 
 /* DROP TABLES */
 
@@ -153,7 +148,7 @@ GO
 CREATE PROCEDURE SP_LISTA_TUTORES_PENDIENTES
 AS
 BEGIN
-    SELECT U.*, D.Foto FROM USUARIO U
+    SELECT U.*, D.Foto, D.Curriculum, D.Antecedentes, D.Recibo, CONVERT(char(10), U.FechaRegistro,103) as FechaFormato FROM USUARIO U
     INNER JOIN DETALLE_TUTOR D ON (D.IdUsuario = U.Id)
     WHERE 
         isTutor = 'true'
@@ -280,7 +275,6 @@ INSERT INTO USUARIO(Nombre,Apellido,Direccion,Email,Clave,isEmpleado,isTutor,isA
 VALUES('David','Leon','Lurin', 'elrey.leon@gmail.com','davidleon','false','false','true','true')
 GO
 
-<<<<<<< HEAD
 /*IsEmpleado*/
 INSERT INTO USUARIO(Nombre,Apellido,Direccion,Email,Clave,isEmpleado,isTutor,isAlumno,Estado,FechaRegistro)  
 VALUES('Alonso','Vasquez','San Isidro', 'vasquez.alonso@gmail.com','alonso1234','false','true','false','true','12/12/2017')
@@ -297,23 +291,18 @@ GO
 INSERT INTO USUARIO(Nombre,Apellido,Direccion,Email,Clave,isEmpleado,isTutor,isAlumno,Estado,FechaRegistro)  
 VALUES('Miguel','Miranda','Los Olvivos', 'miguel.miranda@gmail.com','miki1234','false','true','false','true','10/10/2018')
 GO
-=======
-exec SP_OBTENERTUTORXID 
-select * from usuario
-EXEC SP_LISTA_TUTORES_PENDIENTES
->>>>>>> 5e62809768db8fc6b41f33397c5ea125cb595ce7
 
 /*INSERT DETALLE TUTOR*/
 
-INSERT INTO DETALLE_TUTOR VALUES(11,'true','https://www.psicoactiva.com/blog/wp-content/uploads/2017/07/hombre-soltero-feliz.jpg',null,null,null)
+INSERT INTO DETALLE_TUTOR VALUES(11,'false','https://www.psicoactiva.com/blog/wp-content/uploads/2017/07/hombre-soltero-feliz.jpg',null,null,null)
 GO
-INSERT INTO DETALLE_TUTOR VALUES(12,'true','https://afemefa.com/wp-content/uploads/2017/02/mujer-obesa.jpg',null,null,null)
+INSERT INTO DETALLE_TUTOR VALUES(12,'false','https://afemefa.com/wp-content/uploads/2017/02/mujer-obesa.jpg',null,null,null)
 GO
-INSERT INTO DETALLE_TUTOR VALUES(13,'true','http://www.laredcoaching.com/wp-content/uploads/2016/07/Hombre-pensando-mientras-se-toca-la-barbilla-con-la-mano.jpg',null,null,null)
+INSERT INTO DETALLE_TUTOR VALUES(13,'false','http://www.laredcoaching.com/wp-content/uploads/2016/07/Hombre-pensando-mientras-se-toca-la-barbilla-con-la-mano.jpg',null,null,null)
 GO
-INSERT INTO DETALLE_TUTOR VALUES(14,'true','http://i.shangc.net/2017/0320/20170320094441281.jpg',null,null,null)
+INSERT INTO DETALLE_TUTOR VALUES(14,'false','http://i.shangc.net/2017/0320/20170320094441281.jpg',null,null,null)
 GO
-INSERT INTO DETALLE_TUTOR VALUES(15,'true','https://www.abc.es/media/recreo/2016/09/12/Fotolia_32201374_Subscription_XXL--478x270-kmyG--620x349@abc.jpg',null,null,null)
+INSERT INTO DETALLE_TUTOR VALUES(15,'false','https://www.abc.es/media/recreo/2016/09/12/Fotolia_32201374_Subscription_XXL--478x270-kmyG--620x349@abc.jpg',null,null,null)
 GO
 
 go
@@ -381,17 +370,7 @@ from usuario u
 go
 
 
-
-
-<<<<<<< HEAD
-=======
-
-
-
-
-
-
-
-
-
->>>>>>> 2c0ed3476e617dafd57771a0b11328d18c3fa3ff
+exec SP_OBTENERTUTORXID 
+select * from usuario
+EXEC SP_LISTA_TUTORES_PENDIENTES
+GO
