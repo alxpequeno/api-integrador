@@ -1,5 +1,7 @@
 /* DROP PROCEDURES */
 
+
+
 IF OBJECT_ID('SP_TUTOR_INSERT') IS NOT NULL
     DROP PROCEDURE SP_TUTOR_INSERT
 GO
@@ -16,6 +18,7 @@ IF OBJECT_ID('SP_OBTENERTUTORXID') IS NOT NULL
     DROP PROCEDURE  SP_OBTENERTUTORXID
 GO
 
+<<<<<<< HEAD
 IF OBJECT_ID('SP_TUTOR_DELETE') IS NOT NULL
     DROP PROCEDURE  SP_TUTOR_DELETE
 GO
@@ -55,6 +58,31 @@ GO
 IF OBJECT_ID('SP_OBTENER_ALUMNO_X_ID') IS NOT NULL
     DROP PROCEDURE  SP_OBTENER_ALUMNO_X_ID
 GO
+=======
+IF OBJECT_ID('SP_OBTENER_ALUMNO_X_ID') IS NOT NULL
+    DROP PROCEDURE SP_OBTENER_ALUMNO_X_ID
+GO
+
+IF OBJECT_ID('SP_ALUMNO_UPDATE') IS NOT NULL
+    DROP PROCEDURE SP_ALUMNO_UPDATE
+GO
+
+
+IF OBJECT_ID('SP_ALUMNO_DELETE') IS NOT NULL
+    DROP PROCEDURE SP_ALUMNO_DELETE
+GO
+
+
+IF OBJECT_ID('SP_ALUMNO_INSERT') IS NOT NULL
+    DROP PROCEDURE SP_ALUMNO_INSERT
+GO
+
+
+IF OBJECT_ID('SP_ALUMNO_LISTAR') IS NOT NULL
+    DROP PROCEDURE SP_ALUMNO_LISTAR
+GO
+
+>>>>>>> 5e62809768db8fc6b41f33397c5ea125cb595ce7
 
 /* DROP TABLES */
 
@@ -252,6 +280,7 @@ INSERT INTO USUARIO(Nombre,Apellido,Direccion,Email,Clave,isEmpleado,isTutor,isA
 VALUES('David','Leon','Lurin', 'elrey.leon@gmail.com','davidleon','false','false','true','true')
 GO
 
+<<<<<<< HEAD
 /*IsEmpleado*/
 INSERT INTO USUARIO(Nombre,Apellido,Direccion,Email,Clave,isEmpleado,isTutor,isAlumno,Estado,FechaRegistro)  
 VALUES('Alonso','Vasquez','San Isidro', 'vasquez.alonso@gmail.com','alonso1234','false','true','false','true','12/12/2017')
@@ -268,6 +297,11 @@ GO
 INSERT INTO USUARIO(Nombre,Apellido,Direccion,Email,Clave,isEmpleado,isTutor,isAlumno,Estado,FechaRegistro)  
 VALUES('Miguel','Miranda','Los Olvivos', 'miguel.miranda@gmail.com','miki1234','false','true','false','true','10/10/2018')
 GO
+=======
+exec SP_OBTENERTUTORXID 
+select * from usuario
+EXEC SP_LISTA_TUTORES_PENDIENTES
+>>>>>>> 5e62809768db8fc6b41f33397c5ea125cb595ce7
 
 /*INSERT DETALLE TUTOR*/
 
@@ -281,6 +315,9 @@ INSERT INTO DETALLE_TUTOR VALUES(14,'true','http://i.shangc.net/2017/0320/201703
 GO
 INSERT INTO DETALLE_TUTOR VALUES(15,'true','https://www.abc.es/media/recreo/2016/09/12/Fotolia_32201374_Subscription_XXL--478x270-kmyG--620x349@abc.jpg',null,null,null)
 GO
+
+go
+
 
 
 /*Procedure Alumno*/
@@ -310,6 +347,29 @@ GO
 
 
 
+
+CREATE PROCEDURE SP_ALUMNO_DELETE
+@id int
+as
+update usuario set Estado='false' where @id=Id 
+go
+
+
+CREATE PROCEDURE SP_ALUMNO_UPDATE
+    @id   int,
+    @nombre		VARCHAR(50),
+	@apellido	VARCHAR(50),
+	@direccion	VARCHAR(50),
+	@email		VARCHAR(100),
+	@clave		VARCHAR(50)
+AS
+    UPDATE usuario 
+    set Nombre=@nombre,Apellido=@apellido,Direccion=@direccion,Email=@email,Clave=@clave
+	where Id = @id and isAlumno='true'
+GO
+
+
+
 CREATE PROCEDURE SP_OBTENER_ALUMNO_X_ID
 @ID int
 as
@@ -323,7 +383,15 @@ go
 
 
 
+<<<<<<< HEAD
+=======
 
 
 
 
+
+
+
+
+
+>>>>>>> 2c0ed3476e617dafd57771a0b11328d18c3fa3ff
