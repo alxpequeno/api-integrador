@@ -278,5 +278,119 @@ namespace api_integrador.datos
 
 
 
+
+        public List<Usuario> ListarAlumnos()
+        {
+            List<Usuario> usuarios = null;
+            string sqlStatement = "SP_ALUMNO_LISTAR";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            conexion.Open();
+            SqlDataReader reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                usuarios = new List<Usuario>();
+                while (reader.Read())
+                {
+                    Usuario usuario = new Usuario();
+                    usuario.id = int.Parse(reader["id"].ToString());
+                    usuario.nombre = reader["nombre"].ToString();
+                    usuario.apellido = reader["apellido"].ToString();
+                    usuario.direccion = reader["direccion"].ToString();
+                    usuario.email = reader["email"].ToString();
+                    usuario.clave = reader["clave"].ToString();
+                    usuarios.Add(usuario);
+                }
+            }
+            conexion.Close();
+            return usuarios;
+        }
+
+        public void RegistrarAlumnos(Usuario usuario)
+        {
+            conexion.Open();
+            string sqlStatement = "SP_ALUMNO_INSERT";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@nombre", usuario.nombre);
+            comando.Parameters.AddWithValue("@apellido", usuario.apellido);
+            comando.Parameters.AddWithValue("@direccion", usuario.direccion);
+            comando.Parameters.AddWithValue("@email", usuario.email);
+            comando.Parameters.AddWithValue("@clave", usuario.clave);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+
+        public void EliminarAlumnos(int id)
+        {
+            conexion.Open();
+            string sqlStatement = "SP_ALUMNO_DELETE";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@id", id);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+
+
+
+        public void ActualizarAlumnos(Usuario usuario)
+        {
+
+            conexion.Open();
+            string sqlStatement = "SP_ALUMNO_UPDATE";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@id", usuario.id);
+            comando.Parameters.AddWithValue("@nombre", usuario.nombre);
+            comando.Parameters.AddWithValue("@apellido", usuario.apellido);
+            comando.Parameters.AddWithValue("@direccion", usuario.direccion);
+            comando.Parameters.AddWithValue("@email", usuario.email);
+            comando.Parameters.AddWithValue("@clave", usuario.clave);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+
+
+
+
+
+        public List<AlumnoViewModel> ObtenerTutorxId()
+        {
+            List<TutorViewModel> tutores = null;
+            string sqlStatement = "SP_OBTENERTUTORXID";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            conexion.Open();
+            SqlDataReader reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                tutores = new List<TutorViewModel>();
+                while (reader.Read())
+                {
+                    TutorViewModel tutor = new TutorViewModel();
+                    tutor.id = int.Parse(reader["id"].ToString());
+                    tutor.nombre = reader["nombre"].ToString();
+                    tutor.apellido = reader["apellido"].ToString();
+                    tutor.direccion = reader["direccion"].ToString();
+                    tutor.email = reader["email"].ToString();
+                    tutor.clave = reader["clave"].ToString();
+                    tutor.curriculum = reader["curriculum"].ToString();
+                    tutor.antecedentes = reader["antecedentes"].ToString();
+                    tutor.recibo = reader["recibo"].ToString();
+                    tutor.foto = reader["foto"].ToString();
+                    tutores.Add(tutor);
+                }
+            }
+            conexion.Close();
+            return tutores;
+        }
+
+
+
+
+
+
     }
+
 }

@@ -8,12 +8,11 @@ namespace api_integrador.modelos
 {
     public class Alumno
     {
-        public int id { get; set; }
-        public string nombre { get; set; }
-        public string apellido { get; set; }
-        public string direccion { get; set; }
-        public string email { get; set; }
-        public string clave { get; set; }
+        public int idAlumno { get; set; }
+        public string emailAlumno { get; set; }
+        public string nombreAlumno { get; set; }
+        public string apellidoAlumno { get; set; }
+        public string contraseñaAlumno { get; set; }
 
 
     }
