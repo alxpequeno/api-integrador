@@ -116,5 +116,55 @@ namespace api_integrador.Controllers
             Usuario empleado = lista.FirstOrDefault(x => x.id == id);
             return empleado;
         }
+
+
+
+
+
+
+
+        [HttpGet]
+        public List<Usuario> ListarAlumnos()
+        {
+            var listar = negocios.ListarAlumnos();
+            return listar;
+        }
+
+
+        [HttpPost, HttpOptions]
+        public string RegistrarAlumnos(Usuario usuario)
+        {
+            string mensaje = "";
+            mensaje = negocios.RegistrarAlumno(usuario);
+            return mensaje;
+        }
+
+        [HttpPost, HttpOptions]
+        public string EliminarAlumnos(Usuario usuario)
+        {
+            string mensaje = "";
+            mensaje = negocios.EliminarAlumno(usuario.id);
+            return mensaje;
+        }
+
+        [HttpPost, HttpOptions]
+        public string ActualizarAlumnos(Usuario usuario)
+        {
+            string mensaje = "";
+            mensaje = negocios.ActualizarAlumno(usuario);
+            return mensaje;
+        }
+
+
+        [HttpGet]
+        public Usuario GetAlumnoById(int id)
+        {
+            var lista = negocios.ObtenerAlumnoxId();
+            Usuario alumno = lista.FirstOrDefault(x => x.id == id);
+            return alumno;
+        }
+
+
+
     }
 }

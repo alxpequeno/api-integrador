@@ -184,9 +184,103 @@ namespace api_integrador.negocios
 
 
 
-        public List<TutorViewModel> ObtenerTutorxId()
+        public List<TutorViewModel> ObtenerTutorxId()   
         {
             return datos.ObtenerTutorxId();
         }
+
+
+
+
+
+        public List<Usuario> ListarAlumnos()
+        {
+            return datos.ListarAlumnos();
+        }
+
+
+
+
+        public string RegistrarAlumno(Usuario usuario)
+        {
+            string mensaje = "";
+            try
+            {
+                datos.RegistrarAlumnos(usuario);
+                mensaje = "Alumno Registrado";
+            }
+            catch (Exception ex)
+            {
+                mensaje = "No se registro el alumno " + ex.Message;
+            }
+            return mensaje;
+        }
+
+
+
+
+        public string EliminarAlumno(int id)
+        {
+            string mensaje = "";
+            try
+            {
+
+
+                var existeAlumno = datos.ListarAlumnos().Any(x => x.id == id);
+                if (existeAlumno)
+                {
+                    datos.EliminarAlumnos(id);
+                    mensaje = "Alumno eliminado";
+                }
+                else
+                    mensaje = "Alumno no existe";
+
+            }
+            catch (Exception ex)
+            {
+                mensaje = "No se pudo eliminar el Alumno : " + ex.Message;
+            }
+
+            return mensaje;
+        }
+
+
+
+
+
+        public string ActualizarAlumno(Usuario usuario)
+        {
+            string mensaje = "";
+            try
+            {
+
+
+                var existeAlumno = datos.ListarAlumnos().Any(x => x.id == usuario.id);
+                if (existeAlumno)
+                {
+
+                    datos.ActualizarAlumnos(usuario);
+                    mensaje = "Alumno actualizado";
+                }
+                else
+                    mensaje = "Alumno no existe";
+
+            }
+            catch (Exception ex)
+            {
+                mensaje = "No se actualizo el Alumno " + ex.Message;
+            }
+            return mensaje;
+        }
+
+
+        public List<AlumnoViewModel> ListarAlumnosXID()
+        {
+            return datos.ObtenerAlumnoxId();
+        }
+
+
+
+
     }
 }

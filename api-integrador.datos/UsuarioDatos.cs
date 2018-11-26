@@ -355,35 +355,31 @@ namespace api_integrador.datos
 
 
 
-        public List<AlumnoViewModel> ObtenerTutorxId()
+        public List<AlumnoViewModel> ObtenerAlumnoxId()
         {
-            List<TutorViewModel> tutores = null;
-            string sqlStatement = "SP_OBTENERTUTORXID";
+            List<AlumnoViewModel> alumnos = null;
+            string sqlStatement = "SP_OBTENER_ALUMNO_X_ID";
             SqlCommand comando = new SqlCommand(sqlStatement, conexion);
             comando.CommandType = System.Data.CommandType.StoredProcedure;
             conexion.Open();
             SqlDataReader reader = comando.ExecuteReader();
             if (reader.HasRows)
             {
-                tutores = new List<TutorViewModel>();
+                alumnos = new List<AlumnoViewModel>();
                 while (reader.Read())
                 {
-                    TutorViewModel tutor = new TutorViewModel();
-                    tutor.id = int.Parse(reader["id"].ToString());
-                    tutor.nombre = reader["nombre"].ToString();
-                    tutor.apellido = reader["apellido"].ToString();
-                    tutor.direccion = reader["direccion"].ToString();
-                    tutor.email = reader["email"].ToString();
-                    tutor.clave = reader["clave"].ToString();
-                    tutor.curriculum = reader["curriculum"].ToString();
-                    tutor.antecedentes = reader["antecedentes"].ToString();
-                    tutor.recibo = reader["recibo"].ToString();
-                    tutor.foto = reader["foto"].ToString();
-                    tutores.Add(tutor);
+                    AlumnoViewModel alumno = new AlumnoViewModel();
+                    alumno.id = int.Parse(reader["id"].ToString());
+                    alumno.nombre = reader["nombre"].ToString();
+                    alumno.apellido = reader["apellido"].ToString();
+                    alumno.direccion = reader["direccion"].ToString();
+                    alumno.email = reader["email"].ToString();
+                    alumno.clave = reader["clave"].ToString();
+                    alumnos.Add(alumno);
                 }
             }
             conexion.Close();
-            return tutores;
+            return alumnos;
         }
 
 
