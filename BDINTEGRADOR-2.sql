@@ -1,5 +1,7 @@
 /* DROP PROCEDURES */
 
+
+
 IF OBJECT_ID('SP_TUTOR_INSERT') IS NOT NULL
     DROP PROCEDURE SP_TUTOR_INSERT
 GO
@@ -15,6 +17,30 @@ GO
 IF OBJECT_ID('SP_OBTENERTUTORXID') IS NOT NULL
     DROP PROCEDURE  SP_OBTENERTUTORXID
 GO
+
+IF OBJECT_ID('SP_OBTENER_ALUMNO_X_ID') IS NOT NULL
+    DROP PROCEDURE SP_OBTENER_ALUMNO_X_ID
+GO
+
+IF OBJECT_ID('SP_ALUMNO_UPDATE') IS NOT NULL
+    DROP PROCEDURE SP_ALUMNO_UPDATE
+GO
+
+
+IF OBJECT_ID('SP_ALUMNO_DELETE') IS NOT NULL
+    DROP PROCEDURE SP_ALUMNO_DELETE
+GO
+
+
+IF OBJECT_ID('SP_ALUMNO_INSERT') IS NOT NULL
+    DROP PROCEDURE SP_ALUMNO_INSERT
+GO
+
+
+IF OBJECT_ID('SP_ALUMNO_LISTAR') IS NOT NULL
+    DROP PROCEDURE SP_ALUMNO_LISTAR
+GO
+
 
 /* DROP TABLES */
 
@@ -177,11 +203,14 @@ INSERT USUARIO(Nombre,Apellido,Direccion,Email,Clave,isEmpleado,isTutor,isAlumno
 /* SELECTS */
 
 exec SP_OBTENERTUTORXID 
-select * from usuarios
+select * from usuario
 EXEC SP_LISTA_TUTORES_PENDIENTES
 
 
 select*from USUARIO
+
+go
+
 
 
 /*Procedure Alumno*/
@@ -211,6 +240,29 @@ GO
 
 
 
+
+CREATE PROCEDURE SP_ALUMNO_DELETE
+@id int
+as
+update usuario set Estado='false' where @id=Id 
+go
+
+
+CREATE PROCEDURE SP_ALUMNO_UPDATE
+    @id   int,
+    @nombre		VARCHAR(50),
+	@apellido	VARCHAR(50),
+	@direccion	VARCHAR(50),
+	@email		VARCHAR(100),
+	@clave		VARCHAR(50)
+AS
+    UPDATE usuario 
+    set Nombre=@nombre,Apellido=@apellido,Direccion=@direccion,Email=@email,Clave=@clave
+	where Id = @id and isAlumno='true'
+GO
+
+
+
 CREATE PROCEDURE SP_OBTENER_ALUMNO_X_ID
 @ID int
 as
@@ -220,6 +272,11 @@ from usuario u
  on u.id = d.idUsuario
  where isAlumno = 'true' and u.id=@ID
 go
+
+
+
+
+
 
 
 
