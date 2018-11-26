@@ -231,6 +231,13 @@ from usuario u inner join detalle_tutor d on u.id = d.idUsuario where isTutor = 
 go
 
 
+CREATE PROCEDURE SP_ACEPTAR_TUTOR
+@id int
+as
+update DETALLE_TUTOR set isAceptado = 'true' where IdUsuario = @id
+go
+
+
 /* INSERTS */
 
 /*IsEmpleado*/

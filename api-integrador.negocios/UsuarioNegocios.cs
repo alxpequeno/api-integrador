@@ -190,6 +190,31 @@ namespace api_integrador.negocios
         }
 
 
+        public string AceptarTutor(int id)
+        {
+            string mensaje = "";
+            try
+            {
+                var existeTutor = datos.ListarTutores().Any(x => x.id == id);
+                if (existeTutor)
+                {
+                    datos.AceptarTutor(id);
+                    mensaje = "Tutor aceptado";
+                }
+                else
+                    mensaje = "Tutor no existe";
+
+            }
+            catch (Exception ex)
+            {
+                mensaje = "No se pudo aceptar el tutor : " + ex.Message;
+            }
+
+            return mensaje;
+        }
+
+
+
 
 
 

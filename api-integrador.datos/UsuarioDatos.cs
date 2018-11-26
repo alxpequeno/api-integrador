@@ -275,6 +275,17 @@ namespace api_integrador.datos
         }
 
 
+        public void AceptarTutor(int id)
+        {
+            conexion.Open();
+            string sqlStatement = "SP_ACEPTAR_TUTOR";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@id", id);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
+
 
 
         public List<Usuario> ListarAlumnos()

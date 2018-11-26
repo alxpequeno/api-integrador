@@ -118,6 +118,13 @@ namespace api_integrador.Controllers
         }
 
 
+        [HttpPost, HttpOptions]
+        public string AceptarTutor(TutorViewModel tutor)
+        {
+            string mensaje = "";
+            mensaje = negocios.AceptarTutor(tutor.id);
+            return mensaje;
+        }
 
 
 
