@@ -226,7 +226,7 @@ GO
 
 CREATE PROCEDURE SP_OBTENERTUTORXID
 as
-select u.id,u.Nombre,u.Apellido,u.Direccion,u.Email,u.Clave,Curriculum,Antecedentes,Recibo,Foto
+select u.id,u.Nombre,u.Apellido,u.Direccion,u.Email,u.Clave,Curriculum,Antecedentes,Recibo,Foto, CONVERT(char(10), U.FechaRegistro,103) as FechaFormato
 from usuario u inner join detalle_tutor d on u.id = d.idUsuario where isTutor = 'true'
 go
 

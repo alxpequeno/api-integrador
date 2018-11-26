@@ -266,6 +266,7 @@ namespace api_integrador.datos
                     tutor.antecedentes = reader["antecedentes"].ToString();
                     tutor.recibo = reader["recibo"].ToString();
                     tutor.foto = reader["foto"].ToString();
+                    tutor.fecha = reader["FechaFormato"].ToString();
                     tutores.Add(tutor);
                 }
             }
