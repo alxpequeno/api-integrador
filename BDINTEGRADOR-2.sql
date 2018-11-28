@@ -79,6 +79,11 @@ IF OBJECT_ID('SP_ALUMNO_LISTAR') IS NOT NULL
     DROP PROCEDURE SP_ALUMNO_LISTAR
 GO
 
+IF OBJECT_ID('SP_TUTORIA_INSERT') IS NOT NULL
+    DROP PROCEDURE SP_TUTORIA_INSERT
+GO
+
+
 /* DROP TABLES */
 
 IF OBJECT_ID('USUARIO') IS NOT NULL
@@ -87,6 +92,15 @@ GO
 
 IF OBJECT_ID('DETALLE_TUTOR') IS NOT NULL
     DROP TABLE DETALLE_TUTOR
+GO
+
+
+IF OBJECT_ID('TUTORIA') IS NOT NULL
+    DROP TABLE TUTORIA
+GO
+
+IF OBJECT_ID('MATRICULA_TUTORIA') IS NOT NULL
+    DROP TABLE MATRICULA_TUTORIA
 GO
 
 /* CREATE TABLES */
@@ -116,6 +130,28 @@ CREATE TABLE DETALLE_TUTOR(
 )
 GO
 
+
+
+CREATE TABLE TUTORIA(
+idTutoria int identity(1,1) primary key,
+tituloTutoria varchar(100) not null,
+categoriaTutoria varchar(50) not null,
+Foto        VARCHAR(MAX),
+fechaTutoria datetime not null,
+horaTutoria varchar(10) not null,
+ubicacionTutoria varchar(50) not null,
+precioTutoria money not null,
+descripcionTutoria varchar(500) not null,
+ estadoTutoria BIT not null,
+idTutor int references USUARIO
+)
+GO
+
+CREATE TABLE MATRICULA_TUTORIA(
+idTutoria  int references TUTORIA,
+idTutor int references USUARIO,
+)
+go
 /* CREATE PROCEDURES */
 
 CREATE PROCEDURE SP_LOGIN
@@ -380,4 +416,116 @@ go
 exec SP_OBTENERTUTORXID 
 select * from usuario
 EXEC SP_LISTA_TUTORES_PENDIENTES
+GO
+---------------------------------------------------------------------------------------------------------------------
+--PROCEDURE TUTORIA
+
+CREATE PROCEDURE SP_TUTORIA_INSERT
+@idTutor int,
+@tituloTutoria varchar(100) ,
+@categoriaTutoria varchar(50),
+@Foto        VARCHAR(MAX),
+@horaTutoria varchar(10) ,
+@ubicacionTutoria varchar(50),
+@precioTutoria money ,
+@descipcionTutoria varchar(500),
+@fechaTutoria datetime
+AS
+BEGIN
+
+
+INSERT INTO TUTORIA(tituloTutoria,categoriaTutoria,Foto,horaTutoria,ubicacionTutoria,precioTutoria,descripcionTutoria,estadoTutoria,fechaTutoria,idTutor)
+			VALUES(@tituloTutoria,@categoriaTutoria,@Foto,@horaTutoria,@ubicacionTutoria,@precioTutoria,@descipcionTutoria,'true',@fechaTutoria,@idTutor)
+END
+GO
+
+
+
+CREATE PROCEDURE SP_LISTAR_TUTORIA_TUTOR_ALUMNO
+@idTutoria int,
+@id int
+AS
+BEGIN
+
+SELECT t.tituloTutoria, t.categoriaTutoria, t.fechaTutoria,t.horaTutoria,t.Foto FROM TUTORIA t
+INNER JOIN USUARIO u ON t.idTutor=u.Id
+where u.id=@id and u.isAlumno='true' or isTutor='true'and estadoTutoria='true'and idTutoria=@idTutoria
+	
+
+END
+GO
+
+
+
+
+CREATE PROCEDURE SP_LISTAR_TUTORIA_TUTOR
+
+@id int
+AS
+BEGIN
+
+SELECT t.tituloTutoria, t.categoriaTutoria, t.fechaTutoria,t.horaTutoria,t.precioTutoria,t.Foto FROM TUTORIA t
+INNER JOIN USUARIO u ON t.idTutor=u.Id
+where u.id=@id and isTutor='true'and estadoTutoria='true'
+	
+END
+GO
+
+
+
+CREATE PROCEDURE SP_TUTORIA_UPDATE
+@idTutoria int ,
+@idTutor int,
+@tituloTutoria varchar(100) ,
+@categoriaTutoria varchar(50),
+@Foto varchar(max),
+@horaTutoria varchar(10) ,
+@ubicacionTutoria varchar(50),
+@precioTutoria money ,
+@descripcionTutoria varchar(500),
+@fechaTutoria datetime
+AS
+BEGIN
+
+update TUTORIA
+set tituloTutoria=@tituloTutoria, categoriaTutoria=@categoriaTutoria, Foto=@Foto, horaTutoria=@horaTutoria, ubicacionTutoria=@ubicacionTutoria,
+	precioTutoria=@precioTutoria, descripcionTutoria=@descripcionTutoria, fechaTutoria=@fechaTutoria
+	where idTutor=@idTutor and estadoTutoria='true'and idTutoria=@idTutoria
+
+
+END
+GO
+
+
+
+CREATE PROCEDURE SP_TUTORIA_DELETE
+@idTutor int,
+@idTutoria int
+AS
+BEGIN
+
+update TUTORIA
+set estadoTutoria='false'
+	where idTutor=@idTutor and estadoTutoria='true'and idTutoria=@idTutoria
+
+
+END
+GO
+
+
+
+CREATE PROCEDURE SP_LISTAR_TUTORIA_FILTROS
+@titulo varchar(100),
+@fecha datetime,
+@categoria varchar(50)
+AS
+BEGIN
+
+SELECT t.tituloTutoria, t.categoriaTutoria, t.fechaTutoria,t.horaTutoria,t.Foto FROM TUTORIA t
+INNER JOIN USUARIO u ON t.idTutor=u.Id
+where  u.isAlumno='true' and t.estadoTutoria='true' and t.tituloTutoria Like '%'+@titulo+'%'
+						or t.fechaTutoria like '%'+@fecha+'%'or t.categoriaTutoria Like '%'+@categoria+'%'
+	
+
+END
 GO
