@@ -159,9 +159,9 @@ idTutoria int identity(1,1) primary key,
 tituloTutoria varchar(100) not null,
 categoriaTutoria varchar(50) not null,
 Foto        VARCHAR(MAX),
-fechaTutoria datetime not null,
+fechaTutoria date not null,
 horaTutoria varchar(10) not null,
-ubicacionTutoria varchar(50) not null,
+ubicacionTutoria varchar(MAX) not null,
 precioTutoria money not null,
 descripcionTutoria varchar(500) not null,
  estadoTutoria BIT not null,
@@ -171,7 +171,7 @@ GO
 
 CREATE TABLE MATRICULA_TUTORIA(
 idTutoria  int references TUTORIA,
-idTutor int references USUARIO,
+idAlumno int references USUARIO,
 )
 go
 /* CREATE PROCEDURES */
@@ -448,10 +448,10 @@ CREATE PROCEDURE SP_TUTORIA_INSERT
 @categoriaTutoria varchar(50),
 @Foto        VARCHAR(MAX),
 @horaTutoria varchar(10) ,
-@ubicacionTutoria varchar(50),
+@ubicacionTutoria varchar(MAX),
 @precioTutoria money ,
 @descipcionTutoria varchar(500),
-@fechaTutoria datetime
+@fechaTutoria date
 AS
 BEGIN
 
@@ -500,12 +500,12 @@ CREATE PROCEDURE SP_TUTORIA_UPDATE
 @idTutor int,
 @tituloTutoria varchar(100) ,
 @categoriaTutoria varchar(50),
-@Foto varchar(max),
+@Foto varchar(MAX),
 @horaTutoria varchar(10) ,
-@ubicacionTutoria varchar(50),
+@ubicacionTutoria varchar(MAX),
 @precioTutoria money ,
 @descripcionTutoria varchar(500),
-@fechaTutoria datetime
+@fechaTutoria date
 AS
 BEGIN
 
@@ -538,7 +538,7 @@ GO
 
 CREATE PROCEDURE SP_LISTAR_TUTORIA_FILTROS
 @titulo varchar(100),
-@fecha datetime,
+@fecha date,
 @categoria varchar(50)
 AS
 BEGIN
