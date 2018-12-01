@@ -169,28 +169,13 @@ fechaTutoria		date not null,
 horaTutoria			varchar(10) not null,
 ubicacionTutoria	varchar(MAX) not null,
 precioTutoria		money not null ,
-descripcionTutoria	varchar(500) not null,
+descripcionTutoria	varchar(MAX) not null,
  estadoTutoria		BIT not null,
 cantidaAlumnos		int,
 cantidadMaxima		int,
 idTutor				int references USUARIO
 )
 GO
-/*CREATE TABLE TUTORIA(
-idTutoria			int identity(1,1) primary key,
-tituloTutoria		varchar(100) not null,
-categoriaTutoria	varchar(50) not null,
-Foto				VARCHAR(MAX),
-fechaTutoria		date not null,
-horaTutoria			varchar(10) not null,
-ubicacionTutoria	varchar(MAX) not null,
-precioTutoria		money not null ,
-descripcionTutoria	varchar(500) not null,
- estadoTutoria		BIT not null,
-cantidaAlumnos		varchar(20),
-idTutor				int references USUARIO
-)
-GO*/
 
 
 
@@ -469,7 +454,7 @@ GO
 
 
 
-CREATE PROCEDURE SP_TUTORIA_INSERT
+create PROCEDURE SP_TUTORIA_INSERT
 @idTutor int,
 @tituloTutoria varchar(100) ,
 @categoriaTutoria varchar(50),
@@ -478,19 +463,20 @@ CREATE PROCEDURE SP_TUTORIA_INSERT
 @ubicacionTutoria varchar(MAX),
 @precioTutoria money ,
 @descipcionTutoria varchar(500),
+@cantidadMaxima int,
 @fechaTutoria date
 AS
 BEGIN
 
 
-INSERT INTO TUTORIA(tituloTutoria,categoriaTutoria,Foto,horaTutoria,ubicacionTutoria,precioTutoria,descripcionTutoria,estadoTutoria,fechaTutoria,idTutor,cantidaAlumnos)
-			VALUES(@tituloTutoria,@categoriaTutoria,@Foto,@horaTutoria,@ubicacionTutoria,@precioTutoria,@descipcionTutoria,'true',@fechaTutoria,@idTutor,'0')
+INSERT INTO TUTORIA(tituloTutoria,categoriaTutoria,Foto,horaTutoria,ubicacionTutoria,precioTutoria,descripcionTutoria,estadoTutoria,fechaTutoria,idTutor,cantidaAlumnos, cantidadMaxima)
+			VALUES(@tituloTutoria,@categoriaTutoria,@Foto,@horaTutoria,@ubicacionTutoria,@precioTutoria,@descipcionTutoria,'true',@fechaTutoria,@idTutor,'0',@cantidadMaxima)
 END
 GO
 
 
 
-CREATE PROCEDURE SP_LISTAR_TUTORIA_TUTOR_ALUMNO
+create PROCEDURE SP_LISTAR_TUTORIA_TUTOR_ALUMNO
 @idTutoria int,
 @id int
 AS
@@ -530,13 +516,14 @@ CREATE PROCEDURE SP_TUTORIA_UPDATE
 @ubicacionTutoria varchar(MAX),
 @precioTutoria money ,
 @descripcionTutoria varchar(500),
+@cantidadMaxima int,
 @fechaTutoria date
 AS
 BEGIN
 
 update TUTORIA
 set tituloTutoria=@tituloTutoria, categoriaTutoria=@categoriaTutoria, Foto=@Foto, horaTutoria=@horaTutoria, ubicacionTutoria=@ubicacionTutoria,
-	precioTutoria=@precioTutoria, descripcionTutoria=@descripcionTutoria, fechaTutoria=@fechaTutoria
+	precioTutoria=@precioTutoria, descripcionTutoria=@descripcionTutoria, fechaTutoria=@fechaTutoria, cantidadMaxima=@cantidadMaxima
 	where idTutor=@idTutor and estadoTutoria='true'and idTutoria=@idTutoria
 
 
@@ -570,7 +557,7 @@ BEGIN
 SELECT t.tituloTutoria, t.categoriaTutoria, t.fechaTutoria,t.horaTutoria,t.Foto FROM TUTORIA t
 INNER JOIN USUARIO u ON t.idTutor=u.Id
 where  u.isAlumno='true' and t.estadoTutoria='true' and t.tituloTutoria Like '%'+@titulo+'%'
-						or t.fechaTutoria like '%'+@fecha+'%'or t.categoriaTutoria Like '%'+@categoria+'%'
+						or t.fechaTutoria= @fecha or t.categoriaTutoria Like '%'+@categoria+'%'
 	
 END
 GO
@@ -585,13 +572,13 @@ END
 GO
 
 
-select * from TUTORIA 
+		select * from TUTORIA 
 
 
 
 
-          exec  SP_TUTORIA_INSERT 12,'JAVA BASICA','JAVA','ASDASD','10:30','CIBERTEC',50.60,'TUTORIA BASICA DE JAVA', '10-03-1998'
+          exec  SP_TUTORIA_INSERT 12,'JAVA BASICA','JAVA','ASDASD','10:30','CIBERTEC',50.60,'TUTORIA BASICA DE JAVA', '20','10-03-1998'
 
-		  update TUTORIA
-		  set estadoTutoria='true'
-		  where idTutoria='2'
+		 -- update TUTORIA
+		 -- set estadoTutoria='true'
+		 -- where idTutoria='2'

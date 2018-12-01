@@ -1,0 +1,7 @@
+get
+http://localhost:50645/api/Tutoria/ListarTutorias
+post
+http://localhost:50645/api/Tutoria/RegistrarTutoria
+http://localhost:50645/api/Tutoria/EliminarTutoria
+http://localhost:50645/api/Tutoria/ActualizarTutoria
+http://localhost:50645/api/Tutoria/ListarTutoria_tutor

@@ -12,10 +12,12 @@ namespace api_integrador.negocios
     {
         private UsuarioDatos datos;
 
+
         public UsuarioNegocios()
         {
             datos = new UsuarioDatos();
         }
+
 
         public Usuario Login(string email, string clave)
         {
