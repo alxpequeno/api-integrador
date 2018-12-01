@@ -170,6 +170,7 @@ ubicacionTutoria	varchar(MAX) not null,
 precioTutoria		money not null,
 descripcionTutoria	varchar(500) not null,
  estadoTutoria		BIT not null,
+cantidaAlumnos		varchar(20)  identity(1,1),
 idTutor				int references USUARIO
 )
 GO
@@ -544,19 +545,17 @@ GO
 
 
 
-CREATE PROCEDURE SP_LISTAR_TUTORIA_FILTROS
+create PROCEDURE SP_LISTAR_TUTORIA_FILTROS
 @titulo varchar(100),
-@fecha date,
+@fecha char(10),
 @categoria varchar(50)
 AS
 BEGIN
-
 SELECT t.tituloTutoria, t.categoriaTutoria, CONVERT(CHAR(10),t.fechaTutoria,103),t.horaTutoria,t.Foto FROM TUTORIA t
 INNER JOIN USUARIO u ON t.idTutor=u.Id
 where  u.isAlumno='true' and t.estadoTutoria='true' and t.tituloTutoria Like '%'+@titulo+'%'
 						or t.fechaTutoria like '%'+@fecha+'%'or t.categoriaTutoria Like '%'+@categoria+'%'
 	
-
 END
 GO
 
@@ -571,3 +570,6 @@ GO
 
 
 
+
+
+            
