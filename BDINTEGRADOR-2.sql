@@ -1,4 +1,5 @@
 /* DROP PROCEDURES */
+use BDINTEGRADOR
 
 IF OBJECT_ID('SP_TUTOR_INSERT') IS NOT NULL
     DROP PROCEDURE SP_TUTOR_INSERT
@@ -167,14 +168,29 @@ Foto				VARCHAR(MAX),
 fechaTutoria		date not null,
 horaTutoria			varchar(10) not null,
 ubicacionTutoria	varchar(MAX) not null,
-precioTutoria		money not null,
+precioTutoria		money not null ,
 descripcionTutoria	varchar(500) not null,
  estadoTutoria		BIT not null,
-cantidaAlumnos		varchar(20)  identity(1,1),
+cantidaAlumnos		int,
+cantidadMaxima		int,
 idTutor				int references USUARIO
 )
 GO
-
+/*CREATE TABLE TUTORIA(
+idTutoria			int identity(1,1) primary key,
+tituloTutoria		varchar(100) not null,
+categoriaTutoria	varchar(50) not null,
+Foto				VARCHAR(MAX),
+fechaTutoria		date not null,
+horaTutoria			varchar(10) not null,
+ubicacionTutoria	varchar(MAX) not null,
+precioTutoria		money not null ,
+descripcionTutoria	varchar(500) not null,
+ estadoTutoria		BIT not null,
+cantidaAlumnos		varchar(20),
+idTutor				int references USUARIO
+)
+GO*/
 
 
 
@@ -451,6 +467,8 @@ GO
 ---------------------------------------------------------------------------------------------------------------------
 --PROCEDURE TUTORIA
 
+
+
 CREATE PROCEDURE SP_TUTORIA_INSERT
 @idTutor int,
 @tituloTutoria varchar(100) ,
@@ -465,8 +483,8 @@ AS
 BEGIN
 
 
-INSERT INTO TUTORIA(tituloTutoria,categoriaTutoria,Foto,horaTutoria,ubicacionTutoria,precioTutoria,descripcionTutoria,estadoTutoria,fechaTutoria,idTutor)
-			VALUES(@tituloTutoria,@categoriaTutoria,@Foto,@horaTutoria,@ubicacionTutoria,@precioTutoria,@descipcionTutoria,'true',@fechaTutoria,@idTutor)
+INSERT INTO TUTORIA(tituloTutoria,categoriaTutoria,Foto,horaTutoria,ubicacionTutoria,precioTutoria,descripcionTutoria,estadoTutoria,fechaTutoria,idTutor,cantidaAlumnos)
+			VALUES(@tituloTutoria,@categoriaTutoria,@Foto,@horaTutoria,@ubicacionTutoria,@precioTutoria,@descipcionTutoria,'true',@fechaTutoria,@idTutor,'0')
 END
 GO
 
@@ -478,7 +496,7 @@ CREATE PROCEDURE SP_LISTAR_TUTORIA_TUTOR_ALUMNO
 AS
 BEGIN
 
-SELECT t.tituloTutoria, t.categoriaTutoria,CONVERT(CHAR(10),t.fechaTutoria,103),t.horaTutoria,t.Foto FROM TUTORIA t
+SELECT t.tituloTutoria, t.categoriaTutoria,t.fechaTutoria,t.precioTutoria,t.horaTutoria,t.Foto FROM TUTORIA t
 INNER JOIN USUARIO u ON t.idTutor=u.Id
 where u.id=@id and u.isAlumno='true' or isTutor='true'and estadoTutoria='true'and idTutoria=@idTutoria
 	
@@ -489,20 +507,18 @@ GO
 
 
 
-CREATE PROCEDURE SP_LISTAR_TUTORIA_TUTOR
+create PROCEDURE SP_LISTAR_TUTORIA_TUTOR
 @id int
 AS
 BEGIN
 
-SELECT t.tituloTutoria, t.categoriaTutoria, CONVERT(CHAR(10),t.fechaTutoria,103),t.horaTutoria,t.precioTutoria,t.Foto FROM TUTORIA t
+SELECT t.tituloTutoria, t.categoriaTutoria, t.fechaTutoria,t.horaTutoria,t.precioTutoria,t.Foto,t.cantidaAlumnos FROM TUTORIA t
 INNER JOIN USUARIO u ON t.idTutor=u.Id
 
 where u.id=@id and isTutor='true'and estadoTutoria='true'
 	
 END
 GO
-
-
 
 CREATE PROCEDURE SP_TUTORIA_UPDATE
 @idTutoria int ,
@@ -547,11 +563,11 @@ GO
 
 create PROCEDURE SP_LISTAR_TUTORIA_FILTROS
 @titulo varchar(100),
-@fecha char(10),
+@fecha date,
 @categoria varchar(50)
 AS
 BEGIN
-SELECT t.tituloTutoria, t.categoriaTutoria, CONVERT(CHAR(10),t.fechaTutoria,103),t.horaTutoria,t.Foto FROM TUTORIA t
+SELECT t.tituloTutoria, t.categoriaTutoria, t.fechaTutoria,t.horaTutoria,t.Foto FROM TUTORIA t
 INNER JOIN USUARIO u ON t.idTutor=u.Id
 where  u.isAlumno='true' and t.estadoTutoria='true' and t.tituloTutoria Like '%'+@titulo+'%'
 						or t.fechaTutoria like '%'+@fecha+'%'or t.categoriaTutoria Like '%'+@categoria+'%'
@@ -563,13 +579,19 @@ GO
 create PROCEDURE SP_LISTAR_TUTORIA
 AS
 BEGIN
-SELECT idTutoria,tituloTutoria, categoriaTutoria,horaTutoria,ubicacionTutoria,precioTutoria, descripcionTutoria
+SELECT idTutoria,tituloTutoria, categoriaTutoria,Foto,fechaTutoria,horaTutoria,ubicacionTutoria,precioTutoria, descripcionTutoria,estadoTutoria,cantidaAlumnos,idTutor
  FROM TUTORIA 
 END
 GO
 
 
+select * from TUTORIA 
 
 
 
-            
+
+          exec  SP_TUTORIA_INSERT 12,'JAVA BASICA','JAVA','ASDASD','10:30','CIBERTEC',50.60,'TUTORIA BASICA DE JAVA', '10-03-1998'
+
+		  update TUTORIA
+		  set estadoTutoria='true'
+		  where idTutoria='2'
