@@ -1,5 +1,4 @@
 /* DROP PROCEDURES */
-use BDINTEGRADOR
 
 IF OBJECT_ID('SP_TUTOR_INSERT') IS NOT NULL
     DROP PROCEDURE SP_TUTOR_INSERT
@@ -547,22 +546,6 @@ END
 GO
 
 
-
-create PROCEDURE SP_LISTAR_TUTORIA_FILTROS
-@titulo varchar(100),
-@fecha date,
-@categoria varchar(50)
-AS
-BEGIN
-SELECT t.tituloTutoria, t.categoriaTutoria, t.fechaTutoria,t.horaTutoria,t.Foto FROM TUTORIA t
-INNER JOIN USUARIO u ON t.idTutor=u.Id
-where  u.isAlumno='true' and t.estadoTutoria='true' and t.tituloTutoria Like '%'+@titulo+'%'
-						or t.fechaTutoria= @fecha or t.categoriaTutoria Like '%'+@categoria+'%'
-	
-END
-GO
-
-
 create PROCEDURE SP_LISTAR_TUTORIA
 AS
 BEGIN
@@ -571,11 +554,25 @@ SELECT idTutoria,tituloTutoria, categoriaTutoria,Foto,fechaTutoria,horaTutoria,u
 END
 GO
 
+create proc SP_LISTAR_TUTORIAXFILTROS
+@titulo VARCHAR(50)= NULL,
+@fecha	date = NULL,
+@categoria VARCHAR(50)= NULL
+as
+begin
+SELECT tituloTutoria, horaTutoria, fechaTutoria,descripcionTutoria,categoriaTutoria,precioTutoria,ubicacionTutoria,Foto FROM TUTORIA 
+ where estadoTutoria='true' and
+(tituloTutoria = @titulo OR @titulo is null) AND
+(fechaTutoria = @fecha OR @fecha is null) AND
+(categoriaTutoria = @categoria OR @categoria is null)
+end 
+go
 
-		select * from TUTORIA 
+exec SP_LISTAR_TUTORIAXFILTROS null,null,null
+		
+		select * from tutoria
 
-
-
+	
 
           exec  SP_TUTORIA_INSERT 12,'JAVA BASICA','JAVA','ASDASD','10:30','CIBERTEC',50.60,'TUTORIA BASICA DE JAVA', '20','10-03-1998'
 

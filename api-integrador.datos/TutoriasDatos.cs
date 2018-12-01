@@ -105,7 +105,7 @@ namespace api_integrador.datos
                     Tutoria t = new Tutoria();
                     t.tituloTutoria = reader["tituloTutoria"].ToString();
                     t.categoriaTutoria = reader["categoriaTutoria"].ToString();
-                    t.fechaTutoria = DateTime.Parse( reader["fechaTutoria"].ToString());
+                    t.fechaTutoria = reader["fechaTutoria"].ToString();
                     t.precioTutoria = double.Parse(reader["precioTutoria"].ToString());
                     t.horaTutoria = reader["horaTutoria"].ToString();
                     t.Foto = reader["Foto"].ToString();
@@ -152,41 +152,7 @@ namespace api_integrador.datos
             conexion.Close();
             return tutorias;
         }
-
-        public List<Tutoria> listarTutoria_filtros(string titulo, DateTime fecha, string categoria)
-        {
-          
-            List<Tutoria> tutorias = null;
-            string query = "SP_LISTAR_TUTORIA_FILTROS";
-            SqlCommand comando = new SqlCommand(query, conexion);
-            comando.CommandType = System.Data.CommandType.StoredProcedure;
-            comando.Parameters.AddWithValue("@titulo", titulo);
-            comando.Parameters.AddWithValue("@fecha", fecha);
-            comando.Parameters.AddWithValue("@categoria", categoria);
-            conexion.Open();
-            SqlDataReader reader = comando.ExecuteReader();
-            if (reader.HasRows)
-            {
-                tutorias = new List<Tutoria>();
-
-                while (reader.Read())
-                {
-                    Tutoria t = new Tutoria();
-                    t.tituloTutoria = reader["tituloTutoria"].ToString();
-                    t.categoriaTutoria = reader["categoriaTutoria"].ToString();
-                    t.fechaTutoria = DateTime.Parse(reader["fechaTutoria"].ToString());
-                    t.horaTutoria = reader["horaTutoria"].ToString();
-                    t.precioTutoria = double.Parse(reader["horaTutoria"].ToString());
-                    t.Foto = reader["Foto"].ToString();
-                    tutorias.Add(t);
-                }
-            }
-            conexion.Close();
-            return tutorias;
-        }
-
-
-
+        
         public List<Tutoria> listarTutorias()
         {
             List<Tutoria> tutoria = null;
@@ -207,7 +173,7 @@ namespace api_integrador.datos
                     t.tituloTutoria = reader["tituloTutoria"].ToString();
                     t.categoriaTutoria = reader["categoriaTutoria"].ToString();
                     t.Foto = reader["Foto"].ToString();
-                    t.fechaTutoria = DateTime.Parse(reader["fechaTutoria"].ToString());
+                    t.fechaTutoria = reader["fechaTutoria"].ToString();
                     t.horaTutoria = reader["horaTutoria"].ToString();
                     t.ubicacionTutoria = reader["ubicacionTutoria"].ToString();
                     t.precioTutoria = double.Parse(reader["precioTutoria"].ToString());
@@ -230,7 +196,39 @@ namespace api_integrador.datos
 
 
 
+        public List<Tutoria> ListaTutoriaxFiltros(string titulo, string fecha, string categoria)
+        {
 
+            List<Tutoria> tutorias = null;
+            string query = "SP_LISTAR_TUTORIAXFILTROS";
+            SqlCommand comando = new SqlCommand(query, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@titulo", titulo);
+            comando.Parameters.AddWithValue("@fecha", fecha);
+            comando.Parameters.AddWithValue("@categoria", categoria);
+            conexion.Open();
+            SqlDataReader reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                tutorias = new List<Tutoria>();
+
+                while (reader.Read())
+                {
+                    Tutoria tutoria = new Tutoria();
+                    tutoria.tituloTutoria = reader["tituloTutoria"].ToString();
+                    tutoria.horaTutoria = reader["horaTutoria"].ToString();
+                    tutoria.fechaTutoria = reader["fechaTutoria"].ToString();
+                    tutoria.descripcionTutoria = reader["descripcionTutoria"].ToString();
+                    tutoria.categoriaTutoria = reader["categoriaTutoria"].ToString();
+                    tutoria.precioTutoria = double.Parse(reader["precioTutoria"].ToString());
+                    tutoria.ubicacionTutoria = reader["ubicacionTutoria"].ToString();
+                    tutoria.Foto = reader["Foto"].ToString();
+                    tutorias.Add(tutoria);
+                }
+            }
+            conexion.Close();
+            return tutorias;
+        }
 
 
 

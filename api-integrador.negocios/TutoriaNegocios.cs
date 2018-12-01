@@ -98,10 +98,12 @@ namespace api_integrador.negocios
                              
                 }
 
-        public List<Tutoria> ListarTutoria_filtros(string titulo ,DateTime fecha ,string categoria)
+
+        public List<Tutoria> ListaTutoriaxFiltros(string titulo, string fecha, string categoria)
         {
-            return datos.listarTutoria_filtros(titulo, fecha,categoria);
+            return datos.ListaTutoriaxFiltros(titulo, fecha, categoria);
         }
+
 
         public List<Tutoria> ListarTutoria()
         {

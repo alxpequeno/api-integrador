@@ -65,16 +65,16 @@ namespace api_integrador.Controllers
             return listar;
         }
 
+        
+
+        [HttpPost, HttpOptions]
+        public List<Tutoria> ListaTutoriaxFiltros(Tutoria tutoria)
+        {
+            var listar = negocios.ListaTutoriaxFiltros(tutoria.tituloTutoria, tutoria.fechaTutoria, tutoria.categoriaTutoria);
+            return listar;
+        }
 
 
-
-          [HttpPost, HttpOptions]
-          public List<Tutoria> ListarTutoria_filtros(Tutoria tutoria)
-          {
-              var listar = negocios.ListarTutoria_filtros(tutoria.tituloTutoria, tutoria.fechaTutoria, tutoria.categoriaTutoria);
-              return listar;
-          }
-          
         [HttpGet]
         public List<Tutoria> ListarTutorias()
         {

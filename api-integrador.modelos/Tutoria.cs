@@ -12,7 +12,7 @@ namespace api_integrador.modelos
       public string  tituloTutoria          {get;set;}
       public string  categoriaTutoria       {get;set;}
       public string  Foto                   {get;set;}
-      public DateTime  fechaTutoria         {get;set;}
+      public string fechaTutoria         {get;set;}
       public string  horaTutoria            {get;set;}
       public string  ubicacionTutoria       {get;set;}
       public double  precioTutoria          {get;set;}
