@@ -183,6 +183,8 @@ idTutoria	 int references TUTORIA,
 idAlumno	 int references USUARIO,
 )
 go
+
+
 /* CREATE PROCEDURES */
 
 CREATE PROCEDURE SP_LOGIN
@@ -568,13 +570,24 @@ SELECT tituloTutoria, horaTutoria, fechaTutoria,descripcionTutoria,categoriaTuto
 end 
 go
 
-exec SP_LISTAR_TUTORIAXFILTROS null,null,null
-		
+
+create proc SP_MATRICULATUTORIA
+@idtutoria int,
+@idalumno int
+as
+insert into matricula_tutoria values(@idtutoria,@idalumno) 
+
+update tutoria set cantidaAlumnos = (select count(*) from MATRICULA_TUTORIA where idTutoria=@idtutoria)
+ FROM tutoria
+ inner join MATRICULA_TUTORIA
+on TUTORIA.idTutoria = MATRICULA_TUTORIA.idTutoria
+where MATRICULA_TUTORIA.idTutoria = @idtutoria
+go
+
 		select * from tutoria
 
-	
+        exec  SP_TUTORIA_INSERT 12,'JAVA BASICA','JAVA','ASDASD','10:30','CIBERTEC',50.60,'TUTORIA BASICA DE JAVA', '20','10-03-1998'
 
-          exec  SP_TUTORIA_INSERT 12,'JAVA BASICA','JAVA','ASDASD','10:30','CIBERTEC',50.60,'TUTORIA BASICA DE JAVA', '20','10-03-1998'
 
 		 -- update TUTORIA
 		 -- set estadoTutoria='true'
