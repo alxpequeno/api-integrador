@@ -116,6 +116,9 @@ IF OBJECT_ID('SP_RANKING') IS NOT NULL
 GO
 
 
+IF OBJECT_ID('SP_MATRICULATUTORIA') IS NOT NULL
+    DROP PROCEDURE SP_MATRICULATUTORIA
+GO
 /* DROP TABLES */
 
 IF OBJECT_ID('MATRICULA_TUTORIA') IS NOT NULL
@@ -576,18 +579,17 @@ end
 go
 
 
-
 create proc SP_MATRICULATUTORIA
 @idtutoria int,
 @idalumno int
 as
-insert into matricula_tutoria values(@idtutoria,@idalumno) 
-
+insert into matricula_tutoria values(@idtutoria,@idalumno)
 update tutoria set cantidaAlumnos = (select count(*) from MATRICULA_TUTORIA where idTutoria=@idtutoria)
  FROM tutoria
  inner join MATRICULA_TUTORIA
 on TUTORIA.idTutoria = MATRICULA_TUTORIA.idTutoria
-where MATRICULA_TUTORIA.idTutoria = @idtutoria
+where MATRICULA_TUTORIA.idTutoria = @idtutoria and (select count(*) from MATRICULA_TUTORIA where idTutoria=@idtutoria) <= tutoria.cantidadMaxima
+update TUTORIA set estadoTutoria = 'false' where tutoria.cantidadMaxima =  TUTORIA.cantidaAlumnos;
 go
 
 
