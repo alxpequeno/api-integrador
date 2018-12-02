@@ -51,6 +51,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Reporte.cs" />
     <Compile Include="response\TutoriasPorTutor.cs" />
     <Compile Include="Tutor.cs" />
     <Compile Include="Tutoria.cs" />

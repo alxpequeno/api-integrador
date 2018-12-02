@@ -91,6 +91,12 @@ namespace api_integrador.Controllers
             return mensaje;
         }
 
+        [HttpGet]
+        public List<Reporte> ReporteTutorias()
+        {
+            var listar = negocios.ReporteTutorias();
+            return listar;
+        }
 
 
     }

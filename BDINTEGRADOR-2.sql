@@ -111,6 +111,10 @@ IF OBJECT_ID('SP_LISTAR_TUTORIA') IS NOT NULL
     DROP PROCEDURE SP_LISTAR_TUTORIA
 GO
 
+IF OBJECT_ID('SP_RANKING') IS NOT NULL
+    DROP PROCEDURE SP_RANKING
+GO
+
 
 /* DROP TABLES */
 
@@ -455,6 +459,7 @@ GO
 
 
 
+
 create PROCEDURE SP_TUTORIA_INSERT
 @idTutor int,
 @tituloTutoria varchar(100) ,
@@ -571,6 +576,7 @@ end
 go
 
 
+
 create proc SP_MATRICULATUTORIA
 @idtutoria int,
 @idalumno int
@@ -584,9 +590,17 @@ on TUTORIA.idTutoria = MATRICULA_TUTORIA.idTutoria
 where MATRICULA_TUTORIA.idTutoria = @idtutoria
 go
 
-        exec  SP_TUTORIA_INSERT 12,'JAVA BASICA','JAVA','ASDASD','10:30','CIBERTEC',50.60,'TUTORIA BASICA DE JAVA', '20','10-03-1998'
+
+create proc SP_RANKING
+as
+select RANK() OVER (ORDER BY sum(cantidaAlumnos) DESC) AS Ranking,categoriaTutoria as Categoria,sum(cantidaAlumnos) as Asistentes  from tutoria
+group by categoriaTutoria
+ORDER BY asistentes DESC
+go
+
+exec  SP_TUTORIA_INSERT 12,'JAVA BASICA','JAVA','ASDASD','10:30','CIBERTEC',50.60,'TUTORIA BASICA DE JAVA', '20','10-03-1998'
 
 
-		 -- update TUTORIA
-		 -- set estadoTutoria='true'
-		 -- where idTutoria='2'
+-- update TUTORIA
+-- set estadoTutoria='true'
+-- where idTutoria='2'

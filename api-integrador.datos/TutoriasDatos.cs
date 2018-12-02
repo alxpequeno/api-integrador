@@ -250,6 +250,39 @@ namespace api_integrador.datos
         }
 
 
+        public List<Reporte> ReporteTutorias()
+        {
+            List<Reporte> reporte = null;
+            string query = "SP_RANKING";
+            SqlCommand comando = new SqlCommand(query, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            conexion.Open();
+            SqlDataReader reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                reporte = new List<Reporte>();
+
+                while (reader.Read())
+                {
+                    Reporte r = new Reporte();
+                    r.ranking = int.Parse(reader["Ranking"].ToString());
+                    r.categoria = reader["Categoria"].ToString();
+                    r.asistentes = int.Parse(reader["Asistentes"].ToString());
+
+
+                    reporte.Add(r);
+                }
+
+
+            }
+            conexion.Close();
+
+            return reporte;
+        }
+
+
+
+
 
     }
 }

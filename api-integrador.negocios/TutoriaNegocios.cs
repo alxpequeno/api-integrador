@@ -113,6 +113,13 @@ namespace api_integrador.negocios
         }
 
 
+        public List<Reporte> ReporteTutorias()
+        {
+            return datos.ReporteTutorias();
+
+
+        }
+
 
         public string matriculaTutoria(MatriculaViewModel matricula)
         {
