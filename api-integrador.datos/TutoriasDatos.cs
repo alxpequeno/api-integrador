@@ -232,6 +232,23 @@ namespace api_integrador.datos
 
 
 
+        public void matriculaTutoria(MatriculaViewModel matricula)
+        {
+
+
+            conexion.Open();
+            string query = "SP_MATRICULATUTORIA";
+            SqlCommand cm = new SqlCommand(query, conexion);
+            cm.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cm.Parameters.AddWithValue("@idtutoria", matricula.idTutoria);
+            cm.Parameters.AddWithValue("@idalumno", matricula.idAlumno);
+            
+            cm.ExecuteNonQuery();
+            conexion.Close();
+
+        }
+
 
 
     }

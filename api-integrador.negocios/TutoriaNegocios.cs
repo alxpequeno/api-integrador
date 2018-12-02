@@ -114,7 +114,22 @@ namespace api_integrador.negocios
 
 
 
+        public string matriculaTutoria(MatriculaViewModel matricula)
+        {
+            string mensaje = "";
+            try
+            {
+                datos.matriculaTutoria(matricula);
+                mensaje = "Alumno matriculado";
+            }
+            catch (Exception ex)
+            {
+                mensaje = "No se pudo matricular a el alumno " + ex.Message;
+            }
+            return mensaje;
 
+
+        }
 
     }
 }

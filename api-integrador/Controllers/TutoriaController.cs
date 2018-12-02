@@ -83,6 +83,14 @@ namespace api_integrador.Controllers
         }
 
 
+        [HttpPost, HttpOptions]
+        public string matriculaTutoria(MatriculaViewModel matricula)
+        {
+            string mensaje = "";
+            mensaje = negocios.matriculaTutoria(matricula);
+            return mensaje;
+        }
+
 
 
     }

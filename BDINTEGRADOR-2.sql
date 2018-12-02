@@ -584,8 +584,6 @@ on TUTORIA.idTutoria = MATRICULA_TUTORIA.idTutoria
 where MATRICULA_TUTORIA.idTutoria = @idtutoria
 go
 
-		select * from tutoria
-
         exec  SP_TUTORIA_INSERT 12,'JAVA BASICA','JAVA','ASDASD','10:30','CIBERTEC',50.60,'TUTORIA BASICA DE JAVA', '20','10-03-1998'
 
 
