@@ -47,6 +47,7 @@
     <Compile Include="TutoriaNegocios.cs" />
     <Compile Include="TutorNegocios.cs" />
     <Compile Include="UsuarioNegocios.cs" />
+    <Compile Include="ValidarPagoNegocios.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\api-integrador.datos\api-integrador.datos.csproj">

@@ -188,6 +188,7 @@ GO
 CREATE TABLE MATRICULA_TUTORIA(
 idTutoria	 int references TUTORIA,
 idAlumno	 int references USUARIO,
+unique(idTutoria,idAlumno)
 )
 go
 
@@ -606,3 +607,58 @@ exec  SP_TUTORIA_INSERT 12,'JAVA BASICA','JAVA','ASDASD','10:30','CIBERTEC',50.6
 -- update TUTORIA
 -- set estadoTutoria='true'
 -- where idTutoria='2'
+
+
+/*
+Procedure tarjeta
+*/
+
+create table tipoTarjeta(
+idTipoTarjeta int identity(1,1) primary key,
+nombreTipoTarjeta varchar(20)
+)
+go
+
+
+create table tb_Tarjeta( 
+        idTarjeta int identity(1,1) primary key,
+		idTipoTarjeta int foreign key references tipoTarjeta,
+        numeroTarjeta varchar(16),
+		nombreTarjeta varchar(50),
+		securityCodeTarjeta char(3),
+		mesExpiracionTarjeta char(2),
+        añoExpiracionTarjeta char(4),
+		tarjetaHabilitada bit,
+		lineaCredito decimal(10,2),
+		creditoDisponible decimal(10,2)
+)
+go
+
+
+insert into tipoTarjeta values ('Visa');
+insert into tipoTarjeta values ('MasterCard');
+
+insert into tb_Tarjeta values (1,'1234567890123456','Yesenia Tesen','111','01','2020', 1, 100,50);
+insert into tb_Tarjeta values (1,'1112222333344455','Jhoel Campos','222','02','2031', 0, 100,50);
+
+
+
+create proc SP_TARJETAINFO
+(
+@idTipoTarjeta int ,
+@numeroTarjeta varchar(16),
+@nombreTarjeta varchar(50),
+@securityCodeTarjeta char(3),
+@mesExpiracionTarjeta char(2),
+@añoExpiracionTarjeta char(4)
+)
+as
+begin
+select numeroTarjeta,nombreTarjeta,tarjetaHabilitada,creditoDisponible from tb_Tarjeta
+where idTipoTarjeta = @idTipoTarjeta and numeroTarjeta = @numeroTarjeta and nombreTarjeta = @nombreTarjeta
+and securityCodeTarjeta = @securityCodeTarjeta and mesExpiracionTarjeta = @mesExpiracionTarjeta 
+and añoExpiracionTarjeta = @añoExpiracionTarjeta
+end
+go
+
+exec SP_TARJETAINFO 1,'1234567890123456','Yesenia Tesen','111','01','2020'

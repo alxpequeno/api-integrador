@@ -53,6 +53,7 @@
     </Compile>
     <Compile Include="Reporte.cs" />
     <Compile Include="response\TutoriasPorTutor.cs" />
+    <Compile Include="TarjetaInfo.cs" />
     <Compile Include="Tutor.cs" />
     <Compile Include="Tutoria.cs" />
     <Compile Include="TutorViewModel.cs" />
