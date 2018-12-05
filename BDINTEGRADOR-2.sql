@@ -119,7 +119,23 @@ GO
 IF OBJECT_ID('SP_MATRICULATUTORIA') IS NOT NULL
     DROP PROCEDURE SP_MATRICULATUTORIA
 GO
+
+IF OBJECT_ID('SP_LISTAR_TUTORIAXFILTROS') IS NOT NULL
+    DROP PROCEDURE SP_LISTAR_TUTORIAXFILTROS
+GO
+
+IF OBJECT_ID('SP_TARJETAINFO') IS NOT NULL
+    DROP PROCEDURE SP_TARJETAINFO
+GO
 /* DROP TABLES */
+
+IF OBJECT_ID('tb_Tarjeta') IS NOT NULL
+    DROP TABLE tb_Tarjeta
+GO
+
+IF OBJECT_ID('tipoTarjeta') IS NOT NULL
+    DROP TABLE tipoTarjeta
+GO
 
 IF OBJECT_ID('MATRICULA_TUTORIA') IS NOT NULL
     DROP TABLE MATRICULA_TUTORIA
@@ -136,6 +152,8 @@ GO
 IF OBJECT_ID('DETALLE_TUTOR') IS NOT NULL
     DROP TABLE DETALLE_TUTOR
 GO
+
+
 
 /* CREATE TABLES */
 
@@ -627,7 +645,7 @@ create table tb_Tarjeta(
 		nombreTarjeta varchar(50),
 		securityCodeTarjeta char(3),
 		mesExpiracionTarjeta char(2),
-        añoExpiracionTarjeta char(4),
+        aÃ±oExpiracionTarjeta char(4),
 		tarjetaHabilitada bit,
 		lineaCredito decimal(10,2),
 		creditoDisponible decimal(10,2)
@@ -640,7 +658,7 @@ insert into tipoTarjeta values ('MasterCard');
 
 insert into tb_Tarjeta values (1,'1234567890123456','Yesenia Tesen','111','01','2020', 1, 100,50);
 insert into tb_Tarjeta values (1,'1112222333344455','Jhoel Campos','222','02','2031', 0, 100,50);
-
+go
 
 
 create proc SP_TARJETAINFO
@@ -650,14 +668,14 @@ create proc SP_TARJETAINFO
 @nombreTarjeta varchar(50),
 @securityCodeTarjeta char(3),
 @mesExpiracionTarjeta char(2),
-@añoExpiracionTarjeta char(4)
+@aÃ±oExpiracionTarjeta char(4)
 )
 as
 begin
 select numeroTarjeta,nombreTarjeta,tarjetaHabilitada,creditoDisponible from tb_Tarjeta
 where idTipoTarjeta = @idTipoTarjeta and numeroTarjeta = @numeroTarjeta and nombreTarjeta = @nombreTarjeta
 and securityCodeTarjeta = @securityCodeTarjeta and mesExpiracionTarjeta = @mesExpiracionTarjeta 
-and añoExpiracionTarjeta = @añoExpiracionTarjeta
+and aÃ±oExpiracionTarjeta = @aÃ±oExpiracionTarjeta
 end
 go
 
