@@ -74,6 +74,13 @@ namespace api_integrador.Controllers
             return listar;
         }
 
+        [HttpPost, HttpOptions]
+        public List<TutoriaViewModel> ListaTutoriaxFiltros2(Tutoria tutoria)
+        {
+            var listar = negocios.ListaTutoriaxFiltros2(tutoria.tituloTutoria, tutoria.fechaTutoria, tutoria.categoriaTutoria);
+            return listar;
+        }
+
 
         [HttpGet]
         public List<Tutoria> ListarTutorias()

@@ -13,6 +13,8 @@ namespace api_integrador.datos
         conexionbd cn = new conexionbd();
         SqlConnection conexion;
 
+        UsuarioDatos usuarioDatos = new UsuarioDatos();
+
         public TutoriasDatos()
         {
             conexion = cn.conecta();
@@ -228,6 +230,49 @@ namespace api_integrador.datos
                     tutoria.cantidadAlumnos = int.Parse(reader["cantidaAlumnos"].ToString());
                     tutoria.cantidadMaxima = int.Parse(reader["cantidadMaxima"].ToString());
                     tutoria.idTutor = int.Parse(reader["idTutor"].ToString());
+                    tutorias.Add(tutoria);
+                }
+            }
+            conexion.Close();
+            return tutorias;
+        }
+
+        public List<TutoriaViewModel> ListaTutoriaxFiltros2(string titulo, string fecha, string categoria)
+        {
+
+            List<TutoriaViewModel> tutorias = null;
+            string query = "SP_LISTAR_TUTORIAXFILTROS";
+            SqlCommand comando = new SqlCommand(query, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@titulo", titulo);
+            comando.Parameters.AddWithValue("@fecha", fecha);
+            comando.Parameters.AddWithValue("@categoria", categoria);
+            conexion.Open();
+            SqlDataReader reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                tutorias = new List<TutoriaViewModel>();
+
+                while (reader.Read())
+                {
+                    TutoriaViewModel tutoria = new TutoriaViewModel();
+                    tutoria.idTutoria = int.Parse(reader["idTutoria"].ToString());
+                    tutoria.tituloTutoria = reader["tituloTutoria"].ToString();
+                    tutoria.categoriaTutoria = reader["categoriaTutoria"].ToString();
+                    tutoria.Foto = reader["Foto"].ToString();
+                    tutoria.fechaTutoria = reader["fechaTutoria"].ToString();
+                    tutoria.horaTutoria = reader["horaTutoria"].ToString();
+                    tutoria.ubicacionTutoria = reader["ubicacionTutoria"].ToString();
+                    tutoria.precioTutoria = double.Parse(reader["precioTutoria"].ToString());
+                    tutoria.descripcionTutoria = reader["descripcionTutoria"].ToString();
+                    tutoria.estadoTutoria = bool.Parse(reader["estadoTutoria"].ToString());
+                    tutoria.cantidadAlumnos = int.Parse(reader["cantidaAlumnos"].ToString());
+                    tutoria.cantidadMaxima = int.Parse(reader["cantidadMaxima"].ToString());
+
+                    int idTutor = int.Parse(reader["idTutor"].ToString());
+
+                    tutoria.tutor = usuarioDatos.ObtenerTutorxId2(idTutor);
+
                     tutorias.Add(tutoria);
                 }
             }

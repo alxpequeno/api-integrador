@@ -104,6 +104,11 @@ namespace api_integrador.negocios
             return datos.ListaTutoriaxFiltros(titulo, fecha, categoria);
         }
 
+        public List<TutoriaViewModel> ListaTutoriaxFiltros2(string titulo, string fecha, string categoria)
+        {
+            return datos.ListaTutoriaxFiltros2(titulo, fecha, categoria);
+        }
+
 
         public List<Tutoria> ListarTutoria()
         {
