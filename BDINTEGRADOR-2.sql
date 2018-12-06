@@ -619,9 +619,14 @@ group by categoriaTutoria
 ORDER BY asistentes DESC
 go
 
-exec  SP_TUTORIA_INSERT 12,'JAVA BASICA','JAVA','ASDASD','10:30','CIBERTEC',50.60,'TUTORIA BASICA DE JAVA', '20','10-03-1998'
+exec  SP_TUTORIA_INSERT 11,'Curso de Sql Server ','SQL','https://www.muylinux.com/wp-content/uploads/2018/02/microsoft_sqlserver.png','20:00','Av Angamos 321',30.15,'Con el curso de SQL conocerás el lenguaje de consulta estructurada que te permitirá consultar de manera estructurada la información insertada en la base de datos', '25','06-12-2018'
+exec  SP_TUTORIA_INSERT 13,'Spring Boot Basico','Java','https://cdn-images-1.medium.com/max/856/1*O68LbDvD5Dcsnez73M7v4Q.png','16:30','Calle Manco Capac 112',29.60,'Curso para estudiantes que recien se inician en spring boot', '30', '06-11-2018'
+exec  SP_TUTORIA_INSERT 15,'Desarrollo de aplicaciones Android ','Android','https://www.adhesivosnatos.com/wp-content/uploads/2016/10/android-pegatina-570x600.png','12:00','Av Cesar Vallejo 421',45.00,'Crea apps en Android o en la web, con las herramientas de Google.', '15','01-12-2018'
+exec  SP_TUTORIA_INSERT 14,'Curso de Storage en AWS','AWS','https://uploads-ssl.webflow.com/56a1006de9a99a4669bfd05c/5a037c8a746f250001d469a3_LOGO-AWS-NEW.png','18:00','Av arequipa 552',60.15,'Aprende todo sobre los diferentes tipos de almacenamiento que ofrece AWS e identifica el momento ideal para usarlos', '35','03-12-2018'
+exec  SP_TUTORIA_INSERT 11,'Curso de Ingles Basico','Idiomas','https://img.icons8.com/dusk/1600/language.png','08:15','Av aviacion 302',50.60,'Aprende inglés desde cero. Entiende conceptos básicos y construye oraciones simples, enriquece tu vocabulario y da el primer paso en el desarrollo de tus habilidades en el idioma.', '40','04-12-2018'
 
-
+select * from usuario where isTutor = 'true'
+select * from tutoria
 -- update TUTORIA
 -- set estadoTutoria='true'
 -- where idTutoria='2'
