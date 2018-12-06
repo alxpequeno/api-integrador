@@ -584,16 +584,16 @@ END
 GO
 
 create proc SP_LISTAR_TUTORIAXFILTROS
-@titulo VARCHAR(50)= NULL,
-@fecha	date = NULL,
-@categoria VARCHAR(50)= NULL
+@titulo VARCHAR(50)= '',
+@fecha	date = '',
+@categoria VARCHAR(50)= ''
 as
 begin
-SELECT tituloTutoria, horaTutoria, fechaTutoria,descripcionTutoria,categoriaTutoria,precioTutoria,ubicacionTutoria,Foto FROM TUTORIA 
+SELECT idTutoria,tituloTutoria,categoriaTutoria,Foto,fechaTutoria,horaTutoria,ubicacionTutoria,precioTutoria,descripcionTutoria,estadoTutoria,cantidaAlumnos,cantidadMaxima,idTutor FROM TUTORIA 
  where estadoTutoria='true' and
-(tituloTutoria = @titulo OR @titulo is null) AND
-(fechaTutoria = @fecha OR @fecha is null) AND
-(categoriaTutoria = @categoria OR @categoria is null)
+(tituloTutoria = @titulo OR @titulo = '') AND
+(fechaTutoria = @fecha OR @fecha = '') AND
+(categoriaTutoria = @categoria OR @categoria = '')
 end 
 go
 

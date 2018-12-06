@@ -215,14 +215,19 @@ namespace api_integrador.datos
                 while (reader.Read())
                 {
                     Tutoria tutoria = new Tutoria();
+                    tutoria.idTutoria = int.Parse(reader["idTutoria"].ToString());
                     tutoria.tituloTutoria = reader["tituloTutoria"].ToString();
-                    tutoria.horaTutoria = reader["horaTutoria"].ToString();
-                    tutoria.fechaTutoria = reader["fechaTutoria"].ToString();
-                    tutoria.descripcionTutoria = reader["descripcionTutoria"].ToString();
                     tutoria.categoriaTutoria = reader["categoriaTutoria"].ToString();
-                    tutoria.precioTutoria = double.Parse(reader["precioTutoria"].ToString());
-                    tutoria.ubicacionTutoria = reader["ubicacionTutoria"].ToString();
                     tutoria.Foto = reader["Foto"].ToString();
+                    tutoria.fechaTutoria = reader["fechaTutoria"].ToString();
+                    tutoria.horaTutoria = reader["horaTutoria"].ToString();
+                    tutoria.ubicacionTutoria = reader["ubicacionTutoria"].ToString();
+                    tutoria.precioTutoria = double.Parse(reader["precioTutoria"].ToString());
+                    tutoria.descripcionTutoria = reader["descripcionTutoria"].ToString();
+                    tutoria.estadoTutoria = bool.Parse(reader["estadoTutoria"].ToString());
+                    tutoria.cantidadAlumnos = int.Parse(reader["cantidaAlumnos"].ToString());
+                    tutoria.cantidadMaxima = int.Parse(reader["cantidadMaxima"].ToString());
+                    tutoria.idTutor = int.Parse(reader["idTutor"].ToString());
                     tutorias.Add(tutoria);
                 }
             }
