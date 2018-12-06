@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using api_integrador.modelos;
+using System.Globalization;
 
 namespace api_integrador.datos
 {
@@ -144,7 +146,7 @@ namespace api_integrador.datos
                     response.TutoriasPorTutor t = new response.TutoriasPorTutor();
                     t.tituloTutoria = reader["tituloTutoria"].ToString();
                     t.categoriaTutoria = reader["categoriaTutoria"].ToString();
-                    t.fechaTutoria =DateTime.Parse( reader["fechaTutoria"].ToString());
+                    t.fechaTutoria = DateTime.Parse(reader["fechaTutoria"].ToString());
                     t.horaTutoria = reader["horaTutoria"].ToString();
                     t.precioTutoria = double.Parse(reader["precioTutoria"].ToString());
                     t.Foto = reader["Foto"].ToString();          
@@ -175,7 +177,7 @@ namespace api_integrador.datos
                     t.tituloTutoria = reader["tituloTutoria"].ToString();
                     t.categoriaTutoria = reader["categoriaTutoria"].ToString();
                     t.Foto = reader["Foto"].ToString();
-                    t.fechaTutoria = reader["fechaTutoria"].ToString();
+                    t.fechaTutoria = Convert.ToDateTime(reader["fechaTutoria"]).ToString("dd/MM/yyyy");
                     t.horaTutoria = reader["horaTutoria"].ToString();
                     t.ubicacionTutoria = reader["ubicacionTutoria"].ToString();
                     t.precioTutoria = double.Parse(reader["precioTutoria"].ToString());
@@ -221,8 +223,7 @@ namespace api_integrador.datos
                     tutoria.tituloTutoria = reader["tituloTutoria"].ToString();
                     tutoria.categoriaTutoria = reader["categoriaTutoria"].ToString();
                     tutoria.Foto = reader["Foto"].ToString();
-                    tutoria.fechaTutoria = reader["fechaTutoria"].ToString();
-                    tutoria.horaTutoria = reader["horaTutoria"].ToString();
+                    tutoria.fechaTutoria = Convert.ToDateTime(reader["fechaTutoria"]).ToString("dd/MM/yyyy"); tutoria.horaTutoria = reader["horaTutoria"].ToString();
                     tutoria.ubicacionTutoria = reader["ubicacionTutoria"].ToString();
                     tutoria.precioTutoria = double.Parse(reader["precioTutoria"].ToString());
                     tutoria.descripcionTutoria = reader["descripcionTutoria"].ToString();
