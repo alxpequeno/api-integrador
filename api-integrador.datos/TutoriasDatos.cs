@@ -262,7 +262,7 @@ namespace api_integrador.datos
                     tutoria.tituloTutoria = reader["tituloTutoria"].ToString();
                     tutoria.categoriaTutoria = reader["categoriaTutoria"].ToString();
                     tutoria.Foto = reader["Foto"].ToString();
-                    tutoria.fechaTutoria = reader["fechaTutoria"].ToString();
+                    tutoria.fechaTutoria = Convert.ToDateTime(reader["fechaTutoria"]).ToString("dd/MM/yyyy");
                     tutoria.horaTutoria = reader["horaTutoria"].ToString();
                     tutoria.ubicacionTutoria = reader["ubicacionTutoria"].ToString();
                     tutoria.precioTutoria = double.Parse(reader["precioTutoria"].ToString());
