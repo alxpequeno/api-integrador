@@ -59,6 +59,7 @@
     <Compile Include="TutorViewModel.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="UsuarioViewModel.cs" />
+    <Compile Include="TutoriaViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Settings.settings">

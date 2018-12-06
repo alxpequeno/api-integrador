@@ -14,6 +14,33 @@ namespace api_integrador.datos
             conexion = cn.conecta();
         }
 
+        public Usuario obtenerUsuario(int id)
+        {
+            Usuario usuario = null;
+            string sqlStatement = "SP_OBTENER_USUARIO";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@id", id);
+
+            conexion.Open();
+            SqlDataReader reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                usuario = new Usuario();
+                while (reader.Read())
+                {
+                    usuario.id = int.Parse(reader["id"].ToString());
+                    usuario.nombre = reader["nombre"].ToString();
+                    usuario.apellido = reader["apellido"].ToString();
+                    usuario.direccion = reader["direccion"].ToString();
+                    usuario.email = reader["email"].ToString();
+                    usuario.clave = reader["clave"].ToString();
+                }
+            }
+            conexion.Close();
+            return usuario;
+        }
+
         public List<TutorViewModel> ListaTutoresPendientes()
         {
 
@@ -274,6 +301,38 @@ namespace api_integrador.datos
             return tutores;
         }
 
+        public TutorViewModel ObtenerTutorxId2(int id)
+        {
+            TutorViewModel tutor = null;
+            string sqlStatement = "SP_OBTENERTUTORXID";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@id_tutor", id);
+            conexion.Open();
+            SqlDataReader reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                tutor = new TutorViewModel();
+                while (reader.Read())
+                {
+
+                    tutor.id = int.Parse(reader["id"].ToString());
+                    tutor.nombre = reader["nombre"].ToString();
+                    tutor.apellido = reader["apellido"].ToString();
+                    tutor.direccion = reader["direccion"].ToString();
+                    tutor.email = reader["email"].ToString();
+                    tutor.clave = reader["clave"].ToString();
+                    tutor.curriculum = reader["curriculum"].ToString();
+                    tutor.antecedentes = reader["antecedentes"].ToString();
+                    tutor.recibo = reader["recibo"].ToString();
+                    tutor.foto = reader["foto"].ToString();
+                    tutor.fecha = reader["FechaFormato"].ToString();
+                 
+                }
+            }
+            conexion.Close();
+            return tutor;
+        }
 
         public void AceptarTutor(int id)
         {

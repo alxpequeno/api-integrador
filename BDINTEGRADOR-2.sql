@@ -127,6 +127,12 @@ GO
 IF OBJECT_ID('SP_TARJETAINFO') IS NOT NULL
     DROP PROCEDURE SP_TARJETAINFO
 GO
+
+IF OBJECT_ID('SP_OBTENER_USUARIO') IS NOT NULL
+    DROP PROCEDURE SP_OBTENER_USUARIO
+GO
+
+
 /* DROP TABLES */
 
 IF OBJECT_ID('tb_Tarjeta') IS NOT NULL
@@ -320,9 +326,10 @@ GO
 
 
 CREATE PROCEDURE SP_OBTENERTUTORXID
+@id_tutor int
 as
 select u.id,u.Nombre,u.Apellido,u.Direccion,u.Email,u.Clave,Curriculum,Antecedentes,Recibo,Foto, CONVERT(char(10), U.FechaRegistro,103) as FechaFormato
-from usuario u inner join detalle_tutor d on u.id = d.idUsuario where isTutor = 'true'
+from usuario u inner join detalle_tutor d on u.id = d.idUsuario where isTutor = 'true' and u.Id=@id_tutor
 go
 
 
@@ -472,7 +479,6 @@ from usuario u
 go
 
 
-exec SP_OBTENERTUTORXID 
 select * from usuario
 EXEC SP_LISTA_TUTORES_PENDIENTES
 GO
@@ -685,3 +691,12 @@ end
 go
 
 exec SP_TARJETAINFO 1,'1234567890123456','Yesenia Tesen','111','01','2020'
+go
+
+CREATE PROCEDURE SP_OBTENER_USUARIO
+@id_usuario int
+AS
+    SELECT * FROM USUARIO
+    WHERE Id = @id_usuario
+GO
+
