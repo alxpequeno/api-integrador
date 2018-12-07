@@ -144,13 +144,13 @@ namespace api_integrador.negocios
         }
 
 
-        public string listarMatricula(int idAlumno)
+        public string listarMatricula(int? idAlumno)
         {
             string mensaje = "";
-            var existeTutoria = datos.listarMatricula().Any(x => x.idAlumno == idAlumno);
-            if (existeTutoria)
+            var existeMatricula = datos.listarMatricula().Any(x => x.idAlumno == idAlumno);
+            if (existeMatricula)
             {
-                mensaje = "Alumno ya esta matriculado";
+                mensaje = "Alumno ya se encuentra matriculado";
             }
             else
                 datos.listarMatricula();
