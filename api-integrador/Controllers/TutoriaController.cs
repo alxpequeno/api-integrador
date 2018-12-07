@@ -81,6 +81,21 @@ namespace api_integrador.Controllers
             return listar;
         }
 
+        [HttpPost, HttpOptions]
+        public List<TutoriaViewModel> ListaTutoriasxAlumno(Usuario alumno)
+        {
+            var listar = negocios.ListaTutoriasxAlumno(alumno.id);
+            return listar;
+        }
+
+        [HttpPost, HttpOptions]
+        public List<TutoriaViewModel> ListaTutoriasxTutor(Usuario alumno)
+        {
+            var listar = negocios.ListaTutoriasxTutor(alumno.id);
+            return listar;
+        }
+
+
 
         [HttpGet]
         public List<Tutoria> ListarTutorias()
@@ -106,10 +121,18 @@ namespace api_integrador.Controllers
         }
 
         [HttpPost, HttpOptions]
-        public string listarMatricula(MatriculaViewModel matricula)
+        public string validarAlumnoTutoria(MatriculaViewModel matricula)
         {
             string mensaje = "";
-            mensaje = negocios.listarMatricula(matricula.idAlumno);
+            mensaje = negocios.validarAlumnoTutoria(matricula.idTutoria,matricula.idAlumno);
+            return mensaje;
+        }
+
+        [HttpPost, HttpOptions]
+        public string CulminarTutoria(MatriculaViewModel matricula)
+        {
+            string mensaje = "";
+            mensaje = negocios.CulminarTutoria(matricula.idTutoria);
             return mensaje;
         }
 

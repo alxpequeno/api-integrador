@@ -363,6 +363,101 @@ namespace api_integrador.datos
 
 
 
+        public List<TutoriaViewModel> TutoriasAlumno(int idAlumno)
+        {
+
+            List<TutoriaViewModel> tutorias = null;
+            string query = "SP_LISTAR_TUTORIAxIDALUMNO";
+            SqlCommand comando = new SqlCommand(query, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@idAlumno", idAlumno);
+            conexion.Open();
+            SqlDataReader reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                tutorias = new List<TutoriaViewModel>();
+
+                while (reader.Read())
+                {
+                    TutoriaViewModel tutoria = new TutoriaViewModel();
+                    tutoria.idTutoria = int.Parse(reader["idTutoria"].ToString());
+                    tutoria.tituloTutoria = reader["tituloTutoria"].ToString();
+                    tutoria.categoriaTutoria = reader["categoriaTutoria"].ToString();
+                    tutoria.Foto = reader["Foto"].ToString();
+                    tutoria.fechaTutoria = Convert.ToDateTime(reader["fechaTutoria"]).ToString("dd/MM/yyyy");
+                    tutoria.horaTutoria = reader["horaTutoria"].ToString();
+                    tutoria.ubicacionTutoria = reader["ubicacionTutoria"].ToString();
+                    tutoria.precioTutoria = double.Parse(reader["precioTutoria"].ToString());
+                    tutoria.descripcionTutoria = reader["descripcionTutoria"].ToString();
+                    tutoria.estadoTutoria = bool.Parse(reader["estadoTutoria"].ToString());
+                    tutoria.cantidadAlumnos = int.Parse(reader["cantidaAlumnos"].ToString());
+                    tutoria.cantidadMaxima = int.Parse(reader["cantidadMaxima"].ToString());
+
+                    int idTutor = int.Parse(reader["idTutor"].ToString());
+
+                    tutoria.tutor = usuarioDatos.ObtenerTutorxId2(idTutor);
+
+                    tutorias.Add(tutoria);
+                }
+            }
+            conexion.Close();
+            return tutorias;
+        }
+
+        public List<TutoriaViewModel> TutoriasTutor(int idTutor)
+        {
+
+            List<TutoriaViewModel> tutorias = null;
+            string query = "SP_LISTAR_TUTORIAxIDTUTOR";
+            SqlCommand comando = new SqlCommand(query, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@idTutor", idTutor);
+            conexion.Open();
+            SqlDataReader reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                tutorias = new List<TutoriaViewModel>();
+
+                while (reader.Read())
+                {
+                    TutoriaViewModel tutoria = new TutoriaViewModel();
+                    tutoria.idTutoria = int.Parse(reader["idTutoria"].ToString());
+                    tutoria.tituloTutoria = reader["tituloTutoria"].ToString();
+                    tutoria.categoriaTutoria = reader["categoriaTutoria"].ToString();
+                    tutoria.Foto = reader["Foto"].ToString();
+                    tutoria.fechaTutoria = Convert.ToDateTime(reader["fechaTutoria"]).ToString("dd/MM/yyyy");
+                    tutoria.horaTutoria = reader["horaTutoria"].ToString();
+                    tutoria.ubicacionTutoria = reader["ubicacionTutoria"].ToString();
+                    tutoria.precioTutoria = double.Parse(reader["precioTutoria"].ToString());
+                    tutoria.descripcionTutoria = reader["descripcionTutoria"].ToString();
+                    tutoria.estadoTutoria = bool.Parse(reader["estadoTutoria"].ToString());
+                    tutoria.cantidadAlumnos = int.Parse(reader["cantidaAlumnos"].ToString());
+                    tutoria.cantidadMaxima = int.Parse(reader["cantidadMaxima"].ToString());
+
+                    int id = int.Parse(reader["idTutor"].ToString());
+
+                    tutoria.tutor = usuarioDatos.ObtenerTutorxId2(id);
+
+                    tutorias.Add(tutoria);
+                }
+            }
+            conexion.Close();
+            return tutorias;
+        }
+
+
+        public void CulminarTutoria(int idTutoria)
+        {
+            conexion.Open();
+            string sqlStatement = "SP_TUTORIA_DELETE2";
+            SqlCommand comando = new SqlCommand(sqlStatement, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@idTutoria", idTutoria);
+            comando.ExecuteNonQuery();
+            conexion.Close();
+        }
 
     }
+
+
 }

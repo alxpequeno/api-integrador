@@ -109,6 +109,16 @@ namespace api_integrador.negocios
             return datos.ListaTutoriaxFiltros2(titulo, fecha, categoria);
         }
 
+        public List<TutoriaViewModel> ListaTutoriasxAlumno(int idAlumno)
+        {
+            return datos.TutoriasAlumno(idAlumno);
+        }
+
+        public List<TutoriaViewModel> ListaTutoriasxTutor(int idTutor)
+        {
+            return datos.TutoriasTutor(idTutor);
+        }
+
 
         public List<Tutoria> ListarTutoria()
         {
@@ -144,21 +154,38 @@ namespace api_integrador.negocios
         }
 
 
-        public string listarMatricula(int? idAlumno)
+        public string validarAlumnoTutoria(int? idTutoria,int? idAlumno)
         {
             string mensaje = "";
-            var existeMatricula = datos.listarMatricula().Any(x => x.idAlumno == idAlumno);
+            var existeMatricula = datos.listarMatricula().Any(x => x.idAlumno == idAlumno && x.idTutoria==idTutoria);
             if (existeMatricula)
             {
                 mensaje = "Alumno ya se encuentra matriculado";
             }
-            else
-                datos.listarMatricula();
 
             return mensaje;
 
         }
 
+
+        public string CulminarTutoria(int idTutor)
+        {
+            string mensaje = "";
+            try
+            {
+
+                datos.CulminarTutoria(idTutor);
+                    mensaje = "Tutoria eliminada";
+             
+
+            }
+            catch (Exception ex)
+            {
+                mensaje = "No se pudo eliminar tutoria : " + ex.Message;
+            }
+
+            return mensaje;
+        }
 
 
 
