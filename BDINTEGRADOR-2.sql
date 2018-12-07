@@ -132,6 +132,15 @@ IF OBJECT_ID('SP_LISTARMATRICULA') IS NOT NULL
     DROP PROCEDURE SP_LISTARMATRICULA
 GO
 
+IF OBJECT_ID('SP_LISTAR_TUTORIAxIDALUMNO') IS NOT NULL
+    DROP PROCEDURE SP_LISTAR_TUTORIAxIDALUMNO
+GO
+
+IF OBJECT_ID('SP_LISTAR_TUTORIAxIDTUTOR') IS NOT NULL
+    DROP PROCEDURE SP_LISTAR_TUTORIAxIDTUTOR
+GO
+
+
 
 /* DROP TABLES */
 
@@ -179,7 +188,7 @@ CREATE TABLE USUARIO (
 GO
 
 CREATE TABLE DETALLE_TUTOR(
-    IdUsuario   INT,
+    IdUsuario   INT references USUARIO,
     isAceptado  BIT,
     Foto        VARCHAR(MAX),
     Curriculum  VARCHAR(MAX),
@@ -603,6 +612,26 @@ SELECT idTutoria,tituloTutoria,categoriaTutoria,Foto,fechaTutoria,horaTutoria,ub
 end 
 go
 
+CREATE PROCEDURE SP_LISTAR_TUTORIAxIDALUMNO
+    @idAlumno INT
+AS
+BEGIN
+    SELECT T.idTutoria,tituloTutoria,categoriaTutoria,Foto,fechaTutoria,horaTutoria,ubicacionTutoria,precioTutoria,descripcionTutoria,estadoTutoria,cantidaAlumnos,cantidadMaxima,idTutor 
+    FROM TUTORIA T 
+    INNER JOIN MATRICULA_TUTORIA M ON (M.idTutoria=T.idTutoria)
+    WHERE M.idAlumno = @idAlumno
+END 
+GO
+
+CREATE PROCEDURE SP_LISTAR_TUTORIAxIDTUTOR
+    @idTutor INT
+AS
+BEGIN
+    SELECT T.idTutoria,tituloTutoria,categoriaTutoria,Foto,fechaTutoria,horaTutoria,ubicacionTutoria,precioTutoria,descripcionTutoria,estadoTutoria,cantidaAlumnos,cantidadMaxima,idTutor 
+    FROM TUTORIA T 
+    WHERE T.idTutor = @idTutor
+END 
+GO
 
 create proc SP_MATRICULATUTORIA
 @idtutoria int,
@@ -622,9 +651,6 @@ create proc SP_LISTARMATRICULA
 as
 select idTutoria,idAlumno from matricula_tutoria 
 go
-
-
-exec sp_listarMatricula '1'
 
 create proc SP_RANKING
 as
