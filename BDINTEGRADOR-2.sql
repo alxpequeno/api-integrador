@@ -675,6 +675,8 @@ go
 
 insert into tipoTarjeta values ('Visa');
 insert into tipoTarjeta values ('MasterCard');
+insert into tipoTarjeta values ('American Express');
+insert into tipoTarjeta values ('Diners Club');
 
 insert into tb_Tarjeta values (1,'1234567890123456','Yesenia Tesen','111','01','2020', 1, 100,50);
 insert into tb_Tarjeta values (1,'1112222333344455','Jhoel Campos','222','02','2031', 0, 100,50);
