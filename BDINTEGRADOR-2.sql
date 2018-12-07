@@ -625,14 +625,23 @@ create proc SP_LISTAR_TUTORIAXFILTROS
 @categoria VARCHAR(50)= ''
 as
 begin
-SELECT idTutoria,tituloTutoria,categoriaTutoria,Foto,fechaTutoria,horaTutoria,ubicacionTutoria,precioTutoria,descripcionTutoria,estadoTutoria,cantidaAlumnos,cantidadMaxima,idTutor FROM TUTORIA 
+SELECT idTutoria,tituloTutoria,categoriaTutoria,Foto,
+fechaTutoria
+,horaTutoria,ubicacionTutoria,precioTutoria,descripcionTutoria,estadoTutoria,cantidaAlumnos,cantidadMaxima,idTutor FROM TUTORIA 
  where estadoTutoria='true' and
 (tituloTutoria like concat('%',@titulo,'%') OR @titulo = '') AND
-(fechaTutoria = @fecha OR @fecha = '') AND
+(fechaTutoria = CONVERT(VARCHAR(10), @fecha, 103) OR @fecha = '') AND
 (categoriaTutoria = @categoria OR @categoria = '')
 ORDER BY fechaTutoria desc
 end 
 go
+
+
+exec SP_LISTAR_TUTORIAXFILTROS '','11/06/2018',''
+
+exec SP_LISTAR_TUTORIAXFILTROS '','',''
+
+
 
 
 CREATE PROCEDURE SP_LISTAR_TUTORIAxIDALUMNO
