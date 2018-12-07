@@ -304,7 +304,7 @@ namespace api_integrador.datos
         public TutorViewModel ObtenerTutorxId2(int id)
         {
             TutorViewModel tutor = null;
-            string sqlStatement = "SP_OBTENERTUTORXID";
+            string sqlStatement = "SP_OBTENERTUTORXID2";
             SqlCommand comando = new SqlCommand(sqlStatement, conexion);
             comando.CommandType = System.Data.CommandType.StoredProcedure;
             comando.Parameters.AddWithValue("@id_tutor", id);

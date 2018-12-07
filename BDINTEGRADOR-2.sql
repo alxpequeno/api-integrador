@@ -140,8 +140,12 @@ IF OBJECT_ID('SP_LISTAR_TUTORIAxIDTUTOR') IS NOT NULL
     DROP PROCEDURE SP_LISTAR_TUTORIAxIDTUTOR
 GO
 
-IF OBJECT_ID('SP_TUTORIA_DELETE') IS NOT NULL
-    DROP PROCEDURE SP_TUTORIA_DELETE
+IF OBJECT_ID('SP_TUTORIA_DELETE2') IS NOT NULL
+    DROP PROCEDURE SP_TUTORIA_DELETE2
+GO
+
+IF OBJECT_ID('SP_OBTENER_USUARIO') IS NOT NULL
+    DROP PROCEDURE SP_OBTENER_USUARIO
 GO
 
 
@@ -339,8 +343,15 @@ AS
 GO
 
 
-
 CREATE PROCEDURE SP_OBTENERTUTORXID
+as
+select u.id,u.Nombre,u.Apellido,u.Direccion,u.Email,u.Clave,Curriculum,Antecedentes,Recibo,Foto, CONVERT(char(10), U.FechaRegistro,103) as FechaFormato
+from usuario u inner join detalle_tutor d on u.id = d.idUsuario where isTutor = 'true' 
+go
+
+
+
+CREATE PROCEDURE SP_OBTENERTUTORXID2
 @id_tutor int
 as
 select u.id,u.Nombre,u.Apellido,u.Direccion,u.Email,u.Clave,Curriculum,Antecedentes,Recibo,Foto, CONVERT(char(10), U.FechaRegistro,103) as FechaFormato
@@ -500,7 +511,7 @@ GO
 ---------------------------------------------------------------------------------------------------------------------
 --PROCEDURE TUTORIA
 
-CREATE PROCEDURE SP_TUTORIA_DELETE
+CREATE PROCEDURE SP_TUTORIA_DELETE2
 @idTutoria int
 as
 update TUTORIA set estadoTutoria='false' where idTutoria=@idTutoria
@@ -616,11 +627,13 @@ as
 begin
 SELECT idTutoria,tituloTutoria,categoriaTutoria,Foto,fechaTutoria,horaTutoria,ubicacionTutoria,precioTutoria,descripcionTutoria,estadoTutoria,cantidaAlumnos,cantidadMaxima,idTutor FROM TUTORIA 
  where estadoTutoria='true' and
-(tituloTutoria = @titulo OR @titulo = '') AND
+(tituloTutoria like concat('%',@titulo,'%') OR @titulo = '') AND
 (fechaTutoria = @fecha OR @fecha = '') AND
 (categoriaTutoria = @categoria OR @categoria = '')
+ORDER BY fechaTutoria desc
 end 
 go
+
 
 CREATE PROCEDURE SP_LISTAR_TUTORIAxIDALUMNO
     @idAlumno INT
@@ -630,6 +643,7 @@ BEGIN
     FROM TUTORIA T 
     INNER JOIN MATRICULA_TUTORIA M ON (M.idTutoria=T.idTutoria)
     WHERE M.idAlumno = @idAlumno
+    ORDER BY fechaTutoria desc
 END 
 GO
 
@@ -640,6 +654,7 @@ BEGIN
     SELECT T.idTutoria,tituloTutoria,categoriaTutoria,Foto,fechaTutoria,horaTutoria,ubicacionTutoria,precioTutoria,descripcionTutoria,estadoTutoria,cantidaAlumnos,cantidadMaxima,idTutor 
     FROM TUTORIA T 
     WHERE T.idTutor = @idTutor
+    ORDER BY fechaTutoria desc
 END 
 GO
 

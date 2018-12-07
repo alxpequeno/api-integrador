@@ -89,9 +89,9 @@ namespace api_integrador.Controllers
         }
 
         [HttpPost, HttpOptions]
-        public List<TutoriaViewModel> ListaTutoriasxTutor(Usuario alumno)
+        public List<TutoriaViewModel> ListaTutoriasxTutor(Usuario tutor)
         {
-            var listar = negocios.ListaTutoriasxTutor(alumno.id);
+            var listar = negocios.ListaTutoriasxTutor(tutor.id);
             return listar;
         }
 
