@@ -294,6 +294,7 @@ namespace api_integrador.datos
                     tutor.recibo = reader["recibo"].ToString();
                     tutor.foto = reader["foto"].ToString();
                     tutor.fecha = reader["FechaFormato"].ToString();
+                    tutor.isAceptado = bool.Parse(reader["isAceptado"].ToString());
                     tutores.Add(tutor);
                 }
             }

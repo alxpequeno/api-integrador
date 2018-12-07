@@ -15,5 +15,6 @@ namespace api_integrador.modelos
         public string antecedentes { get; set; }
         public string foto { get; set; }
         public string fecha { get; set; }
+        public bool isAceptado { get; set; }
     }
 }
