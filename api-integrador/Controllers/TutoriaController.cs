@@ -105,6 +105,13 @@ namespace api_integrador.Controllers
             return listar;
         }
 
+        [HttpPost, HttpOptions]
+        public string listarMatricula(MatriculaViewModel matricula)
+        {
+            string mensaje = "";
+            mensaje = negocios.listarMatricula(matricula.idAlumno);
+            return mensaje;
+        }
 
     }
 }

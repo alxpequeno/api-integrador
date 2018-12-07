@@ -128,8 +128,8 @@ IF OBJECT_ID('SP_TARJETAINFO') IS NOT NULL
     DROP PROCEDURE SP_TARJETAINFO
 GO
 
-IF OBJECT_ID('SP_OBTENER_USUARIO') IS NOT NULL
-    DROP PROCEDURE SP_OBTENER_USUARIO
+IF OBJECT_ID('SP_LISTARMATRICULA') IS NOT NULL
+    DROP PROCEDURE SP_LISTARMATRICULA
 GO
 
 
@@ -617,6 +617,14 @@ where MATRICULA_TUTORIA.idTutoria = @idtutoria and (select count(*) from MATRICU
 update TUTORIA set estadoTutoria = 'false' where tutoria.cantidadMaxima =  TUTORIA.cantidaAlumnos;
 go
 
+
+create proc SP_LISTARMATRICULA
+as
+select idTutoria,idAlumno from matricula_tutoria 
+go
+
+
+exec sp_listarMatricula '1'
 
 create proc SP_RANKING
 as

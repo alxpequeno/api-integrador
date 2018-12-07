@@ -334,6 +334,34 @@ namespace api_integrador.datos
 
 
 
+        public List<MatriculaViewModel> listarMatricula()
+        {
+            List<MatriculaViewModel> matricula = null;
+            string query = "SP_LISTARMATRICULA";
+            SqlCommand comando = new SqlCommand(query, conexion);
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            conexion.Open();
+            SqlDataReader reader = comando.ExecuteReader();
+            if (reader.HasRows)
+            {
+                matricula = new List<MatriculaViewModel>();
+
+                while (reader.Read())
+                {
+                    MatriculaViewModel m = new MatriculaViewModel();
+                    m.idTutoria = int.Parse(reader["idTutoria"].ToString());
+                    m.idAlumno = int.Parse(reader["idAlumno"].ToString());
+                    matricula.Add(m);
+                }
+
+
+            }
+            conexion.Close();
+
+            return matricula;
+        }
+
+
 
 
     }
